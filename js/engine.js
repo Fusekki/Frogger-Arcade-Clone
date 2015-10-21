@@ -94,22 +94,6 @@ var GameEngine = function(global) {
         }
     };
 
-    this.fadeOut = function() {
-        var alpha = 0,
-            delta = 0.1;
-
-        alpha += delta;
-        if (alpha <= 0 || alpha >= 1) {
-            delta = - delta;
-        }
-
-        ctx.clearRect(0, 0, this.width, this.height);
-        this.globalAlpha = alpha;   
-        ctx.drawImage(Resources.get(this.sprite), this.x, this.y, this.width, this.height);
-        
-        requestAnimationFrame(this.fadeOut);
-
-    };
 
     /* This function is called by main (our game loop) and itself calls all
      * of the functions which may need to update entity's data. Based on how
@@ -129,7 +113,8 @@ var GameEngine = function(global) {
 
         if (menu.show) {
  //           console.log('Checking avatar collisions.  Calling CheckCollision for each loot: ');
-
+            console.log(menu.mousePos);
+            console.log(menu.allAvatars);
             checkCollisions(menu.mousePos, menu.allAvatars, menu.avatarHover, 'avatar', time);
             menu.cycle(dt);
         }
@@ -154,12 +139,10 @@ var GameEngine = function(global) {
     }
 
     function checkCollisions(source, props, action, type, time) {
-
         "use strict";
         var collision = false;
 
         for (var item in props) {
-            //var collision;
             var obj = props[item];
 
             var entityx = obj.x + obj.hitbox.x,

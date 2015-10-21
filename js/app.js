@@ -41,7 +41,7 @@ World.prototype.showMenu = function() {
     }
   
     if (!menu.show) {
-        menu.show = true;
+      // menu.show = true;
         menu.init();
         menu.refresh();
     }

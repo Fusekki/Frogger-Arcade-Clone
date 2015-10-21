@@ -16,7 +16,7 @@ var Menu = function(items) {
         x: 0,
         y: 0
     };
-  //this.mousePos.hitbox = new Hitbox(0,0,1,1);
+  this.mousePos.hitbox = new Hitbox(0,0,1,1);
   var boyAvatar = new Avatar(125, 200, items[1], 'images/char-boy.png');
   var girlAvatar = new Avatar(275, 200, items[2], 'images/char-cat-girl.png');
   this.allAvatars = [];
@@ -37,6 +37,7 @@ Menu.prototype.init = function() {
 
     var body = document.getElementsByTagName("body")[0];
     body.appendChild(canvas);
+    menu.show = true;
 };
 
 // This is called after init method.  This only happens right when the menu switches to show.
