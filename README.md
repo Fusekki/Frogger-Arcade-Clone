@@ -30,6 +30,3 @@ Implement a log file that keeps x amount of gameplay sessions recorded and repla
 Implement a log file to hold high scores.
 Streamline project much further (suspect redundancy in code and would like it more efficient, potential reworking of objects).
 Larger game board.
-
-
-

@@ -19,13 +19,12 @@ var GameEngine = function(global) {
      * create the canvas element, grab the 2D context for that canvas
      * set the canvas elements height/width and add it to the DOM.
      */
-     "use strict";
     var doc = global.document,
         win = global.window,
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
         lastTime;
-    
+
     canvas.width = 505;
     canvas.height = 606;
     doc.body.appendChild(canvas);
@@ -43,14 +42,14 @@ var GameEngine = function(global) {
          */
 
         var now = Date.now(),
-            dt = (now - lastTime) / 1000.0;         
+            dt = (now - lastTime) / 1000.0;
 
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
-   
+
         update(dt, now);
-        render();        
+        render();
 
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
@@ -74,26 +73,17 @@ var GameEngine = function(global) {
     this.init = function() {
         lastTime = Date.now();
         engine.main();
-        world.alignGameOver();        
+        world.alignGameOver();
     };
 
-        // Game over
+    // Game over
     this.gameOver = function(action) {
-        //  this.backgroundAudio.pause();
-      //  this.gameOverAudio.currentTime = 0;
-       // this.gameOverAudio.play();
-       if (action)
-       {
-        document.getElementById('game-over').style.display = "block";
-//        console.log("game over");
-
-       }
-        else {
-        document.getElementById('game-over').style.display = "none";
- //       console.log("game started");
+        if (action) {
+            document.getElementById('game-over').style.display = "block";
+        } else {
+            document.getElementById('game-over').style.display = "none";
         }
     };
-
 
     /* This function is called by main (our game loop) and itself calls all
      * of the functions which may need to update entity's data. Based on how
@@ -104,95 +94,87 @@ var GameEngine = function(global) {
      * functionality this way (you could just implement collision detection
      * on the entities themselves within your app.js file).
      */
+
     function update(dt, time) {
-        "use strict";
         updateEntities(dt);
         checkBoundaries();
-        //console.log(lastTime);
-       // console.log('checking collisions.');
 
         if (menu.show) {
- //           console.log('Checking avatar collisions.  Calling CheckCollision for each loot: ');
-            console.log(menu.mousePos);
-            console.log(menu.allAvatars);
-            checkCollisions(menu.mousePos, menu.allAvatars, menu.avatarHover, 'avatar', time);
+            checkCollisions(menu.mousePos, menu.allAvatars, menu.avatarHover, 'avatar');
             menu.cycle(dt);
         }
 
         if (world.gameactive && !player.death) {
-            checkCollisions(player, allEnemies, player.loseLife, 'player', time);
+            checkCollisions(player, allEnemies, player.loseLife, 'player');
             checkCollisions(player, allLoot, world.loseLoot, 'loot', time);
         }
-
-   }
+    }
 
     function checkBoundaries() {
-        "use strict";
-
         for (var idx = allEnemies.length - 1; idx >= 0; idx--) {
-            if(allEnemies[idx].clear === true) {
-                allEnemies.splice(idx,1);
-                addEnemies(1,50);
+            if (allEnemies[idx].clear === true) {
+                allEnemies.splice(idx, 1);
+                addEnemies(1, 50);
             }
         }
-        
     }
 
     function checkCollisions(source, props, action, type, time) {
-        "use strict";
+
         var collision = false;
+        var item, obj, entityx, entityy, entityh, entityw, sourcex, sourcey, sourcew, sourceh;
 
-        for (var item in props) {
-            var obj = props[item];
-
-            var entityx = obj.x + obj.hitbox.x,
-                entityy = obj.y + obj.hitbox.y,
-                entityw = obj.hitbox.width,
-                entityh = obj.hitbox.height,
-                sourcex = source.x + source.hitbox.x,
-                sourcey = source.y + source.hitbox.y,
-                sourcew = source.hitbox.width,
+        for (item in props) {
+            if (props.hasOwnProperty(item)) {
+                obj = props[item];
+                entityx = obj.x + obj.hitbox.x;
+                entityy = obj.y + obj.hitbox.y;
+                entityw = obj.hitbox.width;
+                entityh = obj.hitbox.height;
+                sourcex = source.x + source.hitbox.x;
+                sourcey = source.y + source.hitbox.y;
+                sourcew = source.hitbox.width;
                 sourceh = source.hitbox.height;
 
-            if (!obj.death === true) {
+                console.log(obj);
 
-                if (entityx < sourcex + sourcew && 
-                    entityx + entityw > sourcex && 
-                    entityy < sourcey + sourceh && 
-                    entityy + entityh > sourcey) { 
-                    collision = true;
-                    switch(type) {
-                        case 'player':
-                            if (!player.armor) {
-                     //           console.log('player died.');
-                                if (source.animation != 'death') {
-                                    source.animate = true;
-                                    source.animation = 'death';                               
-                                    source.loseLife(time);
+
+                if (obj.death === false) {
+
+                    if (entityx < sourcex + sourcew &&
+                        entityx + entityw > sourcex &&
+                        entityy < sourcey + sourceh &&
+                        entityy + entityh > sourcey) {
+                        collision = true;
+                        switch (type) {
+                            case 'player':
+                                if (!player.armor) {
+                                    //           console.log('player died.');
+                                    if (source.animation != 'death') {
+                                        source.animate = true;
+                                        source.animation = 'death';
+                                        source.loseLife();
+                                    }
                                 }
-                            }                    
-                            break;
-                        case 'loot':
-                            obj.animate = true;
-                            obj.animation = 'death';
-                     //       console.log(obj.name);
-                            action(obj, time);
-                            break;
-                         case 'avatar':
-                             action(obj.name, true);
-                             break;
-                        default: 
-                            break;
+                                break;
+                            case 'loot':
+                                obj.animate = true;
+                                obj.animation = 'death';
+                                //       console.log(obj.name);
+                                action(obj, time);
+                                break;
+                            case 'avatar':
+                                obj.animation = 'death';
+                                action(obj.name, true);
+                                break;
+                            default:
+                                break;
                         }
-                    
-                    } 
+                    }
                 }
             }
-
+        }
     }
-
-
-
 
     /* This is called by the update function  and loops through all of the
      * objects within your allEnemies array as defined in app.js and calls
@@ -202,22 +184,17 @@ var GameEngine = function(global) {
      * render methods.
      */
     function updateEntities(dt) {
-        "use strict";
         allEnemies.forEach(function(enemy) {
-            //console.log(enemy);
-           enemy.update(dt, lastTime);
+            enemy.update(dt, lastTime);
         });
-
-
 
         if (world.gameactive) {
             player.update(dt, lastTime);
             allLoot.forEach(function(loot) {
                 loot.update(dt, lastTime);
-        });
-            world.cycleloot(lastTime);
-
-        }     
+            });
+            world.cycleloot();
+        }
     }
 
     /* This function initially draws the "game level", it will then call
@@ -227,7 +204,6 @@ var GameEngine = function(global) {
      * they are just drawing the entire screen over and over.
      */
     function render() {
-        "use strict";
         // Clear the canvas first.
         ctx.clearRect(0, 0, 505, 606);
 
@@ -235,12 +211,12 @@ var GameEngine = function(global) {
          * for that particular row of the game level.
          */
         var rowImages = [
-                'images/water-block.png',   // Top row is water
-                'images/stone-block.png',   // Row 1 of 3 of stone
-                'images/stone-block.png',   // Row 2 of 3 of stone
-                'images/stone-block.png',   // Row 3 of 3 of stone
-                'images/grass-block.png',   // Row 1 of 2 of grass
-                'images/grass-block.png'    // Row 2 of 2 of grass
+                'images/water-block.png', // Top row is water
+                'images/stone-block.png', // Row 1 of 3 of stone
+                'images/stone-block.png', // Row 2 of 3 of stone
+                'images/stone-block.png', // Row 3 of 3 of stone
+                'images/grass-block.png', // Row 1 of 2 of grass
+                'images/grass-block.png' // Row 2 of 2 of grass
             ],
             numRows = 6,
             numCols = 5,
@@ -262,18 +238,14 @@ var GameEngine = function(global) {
                 ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
             }
         }
-
-
         renderEntities();
 
         if (menu.show) {
             menu.render();
             menu.allAvatars.forEach(function(avatar) {
                 avatar.render();
-         });
-
+            });
         }
-
     }
 
     /* This function is called by the render function and is called on each game
@@ -281,7 +253,7 @@ var GameEngine = function(global) {
      * on your enemy and player entities within app.js
      */
     function renderEntities() {
-        "use strict";
+
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
@@ -289,19 +261,13 @@ var GameEngine = function(global) {
         allLoot.forEach(function(loot) {
             loot.render();
         });
-        
+
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
 
         player.render();
-
     }
-
-    function renderMenu() {
-        menu.render();
-    }
-
 
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when
