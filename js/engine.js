@@ -136,9 +136,6 @@ var GameEngine = function(global) {
                 sourcew = source.hitbox.width;
                 sourceh = source.hitbox.height;
 
-                console.log(obj);
-
-
                 if (obj.death === false) {
 
                     if (entityx < sourcex + sourcew &&
@@ -185,13 +182,13 @@ var GameEngine = function(global) {
      */
     function updateEntities(dt) {
         allEnemies.forEach(function(enemy) {
-            enemy.update(dt, lastTime);
+            enemy.update(dt);
         });
 
         if (world.gameactive) {
             player.update(dt, lastTime);
             allLoot.forEach(function(loot) {
-                loot.update(dt, lastTime);
+                loot.update(dt);
             });
             world.cycleloot();
         }

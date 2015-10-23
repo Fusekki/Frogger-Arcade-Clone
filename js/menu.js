@@ -194,25 +194,25 @@ Menu.prototype.close = function() {
 
 // This is only called if the mouse is detected to reside over one of the avatars.
 Menu.prototype.avatarHover = function(name) {
-    this.collision = true;
+    menu.collision = true;
     switch (name) {
         case 'Jack':
-            if (this.selectedItem != 1) {
-                this.selectedItem = 1;
-                this.selectionChange = true;
+            if (menu.selectedItem != 1) {
+                menu.selectedItem = 1;
+                menu.selectionChange = true;
             }
             break;
         case 'Jill':
-            if (this.selectedItem != 2) {
-                this.selectedItem = 2;
-                this.selectionChange = true;
+            if (menu.selectedItem != 2) {
+                menu.selectedItem = 2;
+                menu.selectionChange = true;
             }
             break;
         default:
             break;
     }
-    if (this.selectionChange) {
-        this.selectionChange = false;
+    if (menu.selectionChange) {
+        menu.selectionChange = false;
     }
 
 };
@@ -220,15 +220,15 @@ Menu.prototype.avatarHover = function(name) {
 // Additional update function that clears the canvas and resets the selection to 0 if no
 // avatar is being hovered over.
 Menu.prototype.cycle = function(dt) {
-    if (!this.collision) {
+    if (!menu.collision) {
         this.selectedItem = 0;
-        this.selectionChange = true;
+        menu.selectionChange = true;
     }
 
-    this.menuctx.clearRect(100, 150, 300, 300);
-    this.draw();
-    this.render();
-    this.update(dt);
+    menu.menuctx.clearRect(100, 150, 300, 300);
+    menu.draw();
+    menu.render();
+    menu.update(dt);
 };
 
 // Self explanatory.

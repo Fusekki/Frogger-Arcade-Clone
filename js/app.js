@@ -432,7 +432,7 @@ Loot.prototype.update = function(dt) {
 //  you collide with a (AKA step on a) rock.  You step on  the rock so you are above the bug before the rock crumbles away.  Not sold
 //  on the idea but it's a start.
 
-Player.prototype.update = function(dt) {
+Player.prototype.update = function(dt, time) {
     var item, idx, currentItem;
     if (this.animate) {
         if (this.animation === 'death') {
