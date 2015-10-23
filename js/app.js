@@ -98,7 +98,7 @@ World.prototype.alignGameOver = function() {
     var x = ctx.canvas.getBoundingClientRect().left;
     var width = ctx.canvas.getBoundingClientRect().width;
 
-    // Centers the game-over message 
+    // Centers the game-over message
     document.getElementById('game-over').style.left = x + width / 3 + 'px';
     document.getElementById('toptotal').style.left = x + width / 2.5 + 'px';
     document.getElementById('scoretotal').style.left = x + width / 1.3 + 'px';
@@ -341,150 +341,6 @@ Actor.prototype.renderHitbox = function() {
     ctx.strokeStyle = "black";
 };
 
-//  Applies any updates to the objects following their render phase.  This includes movement,
-//  animation and everything else. There is also a bonus points area in the game, where if your player
-//  is in a highly traficked area of enemies, receives bonus points based on time spent there.
-Actor.prototype.update = function(dt, time) {
-    var item, idx, currentItem;
-    switch (this.type) {
-        case 'enemy':
-            for (item in allEnemies) {
-                if (allEnemies.hasOwnProperty(item)) {
-                    currentItem = allEnemies[item];
-                    currentItem.x += currentItem.speed * dt;
-                    if (currentItem.x > 500) { // Check if enemy has reached end of board. 
-                        currentItem.clear = true;
-                    }
-                }
-            }
-            break;
-        case 'loot':
-            idx = allLoot.indexOf(this);
-            if (this.animate && this.animation === 'death') {
-                this.alpha -= dt;
-                if (this.alpha < 0) {
-                    world.lootstats.removeidx = idx;
-                    world.clearLoot();
-                }
-            }
-            break;
-        case 'player':
-            if (player.animate) {
-                if (player.animation === 'death') {
-                    player.rotate += (550 * dt);
-                    player.offset.x += (550 * dt);
-                    player.offset.y += (550 * dt);
-                    player.alpha -= dt;
-                    player.death = true;
-                    if (player.alpha <= 0) {
-                        player.rotate = 0;
-                        player.animationend = 0;
-                        player.animation = null;
-                        player.animate = false;
-                        player.death = false;
-                        if (player.lives === 0) {
-                            player.reset();
-                            world.gameEnd();
-                        } else {
-                            player.reset();
-                        }
-                    }
-                } else if (player.animation === 'jump') {
-                    if (player.scaleup) {
-                        player.scalechange = (player.scale * 1.05 - player.scale);
-                        player.scale *= 1.05;
-                        if (player.scale >= 1.5) {
-                            player.scaleup = false;
-                        }
-                    } else {
-                        player.scalechange = (player.scale * 0.95 - player.scale);
-                        player.scale *= 0.95;
-                        if (player.scale <= 1) {
-                            this.score += 100;
-                            updateScore();
-                            player.reset();
-                        }
-                    }
-                } else if (player.animation === 'move') {
-                    switch (player.animation_d) {
-                        case 'left':
-                            if (player.anime_dest < player.x) {
-                                player.x -= (dt * 800);
-                            } else {
-                                player.x = player.anime_dest;
-                                player.animation = null;
-                                player.animation_d = null;
-                                player.animationend = 0;
-                            }
-                            break;
-                        case 'right':
-                            if (player.anime_dest > player.x) {
-                                player.x += (dt * 800);
-                            } else {
-                                player.x = player.anime_dest;
-                                player.animation = null;
-                                player.animation_d = null;
-                                player.animationend = 0;
-                            }
-                            break;
-                        case 'up':
-                            if (player.anime_dest < player.y) {
-                                player.y -= (dt * 800);
-                            } else {
-                                player.y = player.anime_dest;
-                                player.animation = null;
-                                player.animation_d = null;
-                                player.animationend = 0;
-                            }
-                            break;
-                        case 'down':
-                            if (player.anime_dest > player.y) {
-                                player.y += (dt * 800);
-                            } else {
-                                player.y = player.anime_dest;
-                                player.animation = null;
-                                player.animation_d = null;
-                                player.animationend = 0;
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-            if (player.y <= 0 && player.animation != 'jump') {
-                player.score += 100;
-                player.animate = true;
-                player.animation = 'jump';
-                player.scaleup = true;
-                player.animationend = time + (player.deathanimate * 1000);
-                updateScore();
-            }
-            if (player.y > 73 && player.y < 256) { // Check if player is in danger zone
-                if (player.bonus === false) { // Checks to see if they had already been in zone.
-                    player.bonus = true;
-                    player.bonustime = time + (player.bonuswait * 1000);
-                } else if (player.bonustime <= time) {
-                    player.score += player.bonusscore;
-                    updateScore();
-                    player.bonustime = time + (player.bonuswait * 1000);
-                }
-                updateScore();
-            } else {
-                player.bonus = false;
-            }
-            if (player.armor) {
-                if (player.x != player.armor_x || player.y != player.armor_y) {
-                    player.armor = false;
-                    player.armor_x = null;
-                    player.armor_y = null;
-                }
-            }
-            break;
-        default:
-            break;
-    }
-};
 
 // This Hitbox object.
 var Hitbox = function(x, y, w, h) {
@@ -540,6 +396,157 @@ Enemy.prototype.constructor = Enemy;
 Player.prototype = Object.create(Actor.prototype);
 Player.prototype.constructor = Player;
 
+
+//  These serieis of updates apply to the object following its render phase.  Includes movement,
+//  animation and everything else that needs to be metered by a dt variable.
+
+Enemy.prototype.update = function(dt) {
+    var item, idx, currentItem;
+    for (item in allEnemies) {
+        if (allEnemies.hasOwnProperty(item)) {
+            currentItem = allEnemies[item];
+            currentItem.x += currentItem.speed * dt;
+            if (currentItem.x > 500) { // Check if enemy has reached end of board.
+                currentItem.clear = true;
+            }
+        }
+    }
+};
+
+Loot.prototype.update = function(dt) {
+    var item, idx, currentItem;
+    idx = allLoot.indexOf(this);
+    if (this.animate && this.animation === 'death') {
+        this.alpha -= dt;
+        if (this.alpha < 0) {
+            world.lootstats.removeidx = idx;
+            world.clearLoot();
+        }
+    }
+};
+
+//  This update encompasses the many different animations and their effects based on a dt calculation which can be adjusted
+//  by altering the coordinating variables.  These include a death animation (self-explanatory), and a jump animation for when yoy
+//  player jumps over the water to the magical bonus heaven. It also covers a time-based bonus area of the map where your points
+//  are incremented over a variable set of time. Armor (for lack of a beter term) serves as a time-based shield for after
+//  you collide with a (AKA step on a) rock.  You step on  the rock so you are above the bug before the rock crumbles away.  Not sold
+//  on the idea but it's a start.
+
+Player.prototype.update = function(dt) {
+    var item, idx, currentItem;
+    if (this.animate) {
+        if (this.animation === 'death') {
+            this.rotate += (550 * dt);
+            this.offset.x += (550 * dt);
+            this.offset.y += (550 * dt);
+            this.alpha -= dt;
+            this.death = true;
+            if (this.alpha <= 0) {
+                this.rotate = 0;
+                this.animationend = 0;
+                this.animation = null;
+                this.animate = false;
+                this.death = false;
+                if (this.lives === 0) {
+                    this.reset();
+                    world.gameEnd();
+                } else {
+                    this.reset();
+                }
+            }
+        } else if (this.animation === 'jump') {
+            if (this.scaleup) {
+                this.scalechange = (this.scale * 1.05 - this.scale);
+                this.scale *= 1.05;
+                if (this.scale >= 1.5) {
+                    this.scaleup = false;
+                }
+            } else {
+                this.scalechange = (this.scale * 0.95 - this.scale);
+                this.scale *= 0.95;
+                if (this.scale <= 1) {
+                    this.score += 100;
+                    updateScore();
+                    this.reset();
+                }
+            }
+        } else if (this.animation === 'move') {
+            switch (this.animation_d) {
+                case 'left':
+                    if (this.anime_dest < this.x) {
+                        this.x -= (dt * 800);
+                    } else {
+                        this.x = this.anime_dest;
+                        this.animation = null;
+                        this.animation_d = null;
+                        this.animationend = 0;
+                    }
+                    break;
+                case 'right':
+                    if (this.anime_dest > this.x) {
+                        this.x += (dt * 800);
+                    } else {
+                        this.x = this.anime_dest;
+                        this.animation = null;
+                        this.animation_d = null;
+                        this.animationend = 0;
+                    }
+                    break;
+                case 'up':
+                    if (this.anime_dest < this.y) {
+                        this.y -= (dt * 800);
+                    } else {
+                        this.y = this.anime_dest;
+                        this.animation = null;
+                        this.animation_d = null;
+                        this.animationend = 0;
+                    }
+                    break;
+                case 'down':
+                    if (this.anime_dest > this.y) {
+                        this.y += (dt * 800);
+                    } else {
+                        this.y = this.anime_dest;
+                        this.animation = null;
+                        this.animation_d = null;
+                        this.animationend = 0;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    if (this.y <= 0 && this.animation != 'jump') {
+        this.score += 100;
+        this.animate = true;
+        this.animation = 'jump';
+        this.scaleup = true;
+        this.animationend = time + (this.deathanimate * 1000);
+        updateScore();
+    }
+    if (this.y > 73 && this.y < 256) { // Check if player is in danger zone
+        if (this.bonus === false) { // Checks to see if they had already been in zone.
+            this.bonus = true;
+            this.bonustime = time + (this.bonuswait * 1000);
+        } else if (this.bonustime <= time) {
+            this.score += this.bonusscore;
+            updateScore();
+            this.bonustime = time + (this.bonuswait * 1000);
+        }
+        updateScore();
+    } else {
+        this.bonus = false;
+    }
+    if (this.armor) {
+        if (this.x != this.armor_x || this.y != this.armor_y) {
+            this.armor = false;
+            this.armor_x = null;
+            this.armor_y = null;
+        }
+    }
+};
+
 // Called to reset the player (beginning of game, player respawn, etc.)
 Player.prototype.reset = function() {
     this.height = 171;
@@ -566,9 +573,9 @@ Player.prototype.reset = function() {
 
 // Called when a player loses a life by being collided with an enemy.
 Player.prototype.loseLife = function() {
-    player.lives -= 1;
-    player.death = true;
-    player.animation = 'death';
+    this.lives -= 1;
+    this.death = true;
+    this.animation = 'death';
     updateScore();
 };
 
@@ -585,7 +592,7 @@ function keyPress(event) {
 }
 
 Player.prototype.handleInput = function(key) {
-    if (player.animation === null) {
+    if (this.animation === null) {
         switch (key) {
             case "left":
                 {
