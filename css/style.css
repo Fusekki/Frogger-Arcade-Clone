@@ -4,6 +4,7 @@ body {
 }
 
 canvas {
+<<<<<<< HEAD
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -26,24 +27,49 @@ canvas {
 		font-size: 30px;
 		cursor: default;
 		display: none;
+=======
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background:;
+}
+
+.score, .lives, .topscore {
+    position: absolute;
+    top: 5px;
+    color: #FF7F00;
+    font-family: Helvetica, sans-serif;
+    cursor: default;
+    display: none;
+}
+
+.game-over {
+    position: absolute;
+    top: 200px;
+    color: #FF7F00;
+    font-family: Helvetica, sans-serif;
+    font-size: 30px;
+    cursor: default;
+    display: none;
+>>>>>>> b7ed203f9efbafeacdf2d854b30deb4ce9c390a3
 }
 
 .game-over span {
-		font-size: 20px;
-		cursor: pointer;
-		position: relative;
+    font-size: 20px;
+    cursor: pointer;
+    position: relative;
 }
 
 .game-over span:hover {
-		color: #FFD700;
+    color: #FFD700;
 }
 
 .loading {
-		position: absolute;
-		top: 100px;
-		left: 210px;
-		color: #FF7F00;
-		font-family: Helvetica, sans-serif;
-		font-size: 30px;
-		cursor: default;
-	}
+    position: absolute;
+    top: 100px;
+    left: 210px;
+    color: #FF7F00;
+    font-family: Helvetica, sans-serif;
+    font-size: 30px;
+    cursor: default;
+}

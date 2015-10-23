@@ -1,6 +1,5 @@
 Title: Frogger Clone
 Author: Phillip Stafford and Udacity templates and graphics.
-Website: http://frogitllc.com/frogger
 Description: A Frogger style clone using JS and html canvas.  This is Project 3 submission for FE Nanodegree at Udacity.
 
 Breakdown of the files used:
