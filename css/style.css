@@ -5,15 +5,14 @@ body {
 
 canvas {
 		position: absolute;
-		top: 0px;
-		left: 0px;
-		background:;
+		top: 0;
+		left: 0;
 		}
 
 .score, .lives, .topscore {
 		position: absolute;
 		top: 5px;
-		color: #FF7F00;
+		color: #ff7f00;
 		font-family: Helvetica, sans-serif;
 		cursor: default;
 		display: none;
@@ -22,11 +21,11 @@ canvas {
 .game-over {
 		position: absolute;
 		top: 200px;
-		color: #FF7F00;
+		color: #ff7f00;
 		font-family: Helvetica, sans-serif;
 		font-size: 30px;
 		cursor: default;
-		display: none;		
+		display: none;
 }
 
 .game-over span {
