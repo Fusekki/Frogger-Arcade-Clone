@@ -401,7 +401,7 @@ Player.prototype.constructor = Player;
 //  animation and everything else that needs to be metered by a dt variable.
 
 Enemy.prototype.update = function(dt) {
-    var item, idx, currentItem;
+    var item, currentItem;
     for (item in allEnemies) {
         if (allEnemies.hasOwnProperty(item)) {
             currentItem = allEnemies[item];
@@ -414,7 +414,7 @@ Enemy.prototype.update = function(dt) {
 };
 
 Loot.prototype.update = function(dt) {
-    var item, idx, currentItem;
+    var idx;
     idx = allLoot.indexOf(this);
     if (this.animate && this.animation === 'death') {
         this.alpha -= dt;
@@ -433,7 +433,6 @@ Loot.prototype.update = function(dt) {
 //  on the idea but it's a start.
 
 Player.prototype.update = function(dt, time) {
-    var item, idx, currentItem;
     if (this.animate) {
         if (this.animation === 'death') {
             this.rotate += (550 * dt);
