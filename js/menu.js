@@ -35,13 +35,13 @@ Menu.prototype.init = function() {
 
     var body = document.getElementsByTagName("body")[0];
     body.appendChild(canvas);
-    menu.show = true;
+    this.show = true;
 };
 
 // This is called after init method.  This only happens right when the menu switches to show.
 Menu.prototype.refresh = function() {
     var canvas = document.getElementById('MenuLayer');
-    menu.menuctx = canvas.getContext("2d");
+    this.menuctx = canvas.getContext("2d");
 
     // Add event listeners for mouse move and click
     canvas.addEventListener('mousemove', function(evt) {
@@ -70,38 +70,38 @@ Menu.prototype.refresh = function() {
 
 // This draws the menu, fills in the background, and places the "Choose Player" text.
 Menu.prototype.draw = function() {
-    menu.menuctx.globalAlpha = menu.alpha;
-    var lingrad = menu.menuctx.createLinearGradient(100, 150, 300, 300);
+    this.menuctx.globalAlpha = this.alpha;
+    var lingrad = this.menuctx.createLinearGradient(100, 150, 300, 300);
 
     lingrad.addColorStop(0, '#0B3B0B');
     lingrad.addColorStop(1, '#99FF99');
 
-    menu.menuctx.fillStyle = lingrad;
-    menu.menuctx.fillRect(100, 150, 300, 300);
-    menu.menuctx.font = "36px Times New Roman";
-    menu.menuctx.strokeStyle = "black";
-    menu.menuctx.lineWidth = 3;
-    menu.menuctx.fillStyle = "white";
+    this.menuctx.fillStyle = lingrad;
+    this.menuctx.fillRect(100, 150, 300, 300);
+    this.menuctx.font = "36px Times New Roman";
+    this.menuctx.strokeStyle = "black";
+    this.menuctx.lineWidth = 3;
+    this.menuctx.fillStyle = "white";
 
     //  Write the text 'choose Player'
-    menu.menuctx.font = '36px Times New Roman';
-    menu.menuctx.fillStyle = 'white';
-    menu.menuctx.strokeText(this.items[0], 150, 180);
-    menu.menuctx.fillText(this.items[0], 150, 180);
+    this.menuctx.font = '36px Times New Roman';
+    this.menuctx.fillStyle = 'white';
+    this.menuctx.strokeText(this.items[0], 150, 180);
+    this.menuctx.fillText(this.items[0], 150, 180);
 
 };
 
 // Renders the text for the players.
 Menu.prototype.render = function() {
-    menu.menuctx.font = this.one[2] + 'px Times New Roman';
-    menu.menuctx.fillStyle = this.one[3];
-    menu.menuctx.strokeText(this.items[1], this.one[0], this.one[1]);
-    menu.menuctx.fillText(this.items[1], this.one[0], this.one[1]);
+    this.menuctx.font = this.one[2] + 'px Times New Roman';
+    this.menuctx.fillStyle = this.one[3];
+    this.menuctx.strokeText(this.items[1], this.one[0], this.one[1]);
+    this.menuctx.fillText(this.items[1], this.one[0], this.one[1]);
 
-    menu.menuctx.font = this.two[2] + 'px Times New Roman';
-    menu.menuctx.fillStyle = this.two[3];
-    menu.menuctx.strokeText(this.items[2], this.two[0], this.two[1]);
-    menu.menuctx.fillText(this.items[2], this.two[0], this.two[1]);
+    this.menuctx.font = this.two[2] + 'px Times New Roman';
+    this.menuctx.fillStyle = this.two[3];
+    this.menuctx.strokeText(this.items[2], this.two[0], this.two[1]);
+    this.menuctx.fillText(this.items[2], this.two[0], this.two[1]);
 };
 
 // Update function that sets the fade of the menu and determines the display text based on the
@@ -112,7 +112,7 @@ Menu.prototype.update = function(dt) {
             this.alpha += (dt * 5);
             if (this.alpha > 1) {
                 this.alpha = 1;
-                menu.menuctx.alpha = 1;
+                this.menuctx.alpha = 1;
                 this.fade = false;
                 this.fade_d = null;
             }
@@ -121,52 +121,52 @@ Menu.prototype.update = function(dt) {
             this.alpha -= (dt * 5);
             if (this.alpha < 0) {
                 this.alpha = 0;
-                menu.menuctx.alpha = 0;
+                this.menuctx.alpha = 0;
                 this.fade = false;
                 this.fade_d = null;
-                menu.close();
+                this.close();
             }
         }
     }
-    switch (menu.selectedItem) {
+    switch (this.selectedItem) {
         case 0:
-            menu.one[0] = 140;
-            menu.one[2] = 36;
-            menu.one[3] = 'white';
-            menu.two[0] = 305;
-            menu.two[2] = 36;
-            menu.two[3] = 'white';
+            this.one[0] = 140;
+            this.one[2] = 36;
+            this.one[3] = 'white';
+            this.two[0] = 305;
+            this.two[2] = 36;
+            this.two[3] = 'white';
             break;
         case 1:
-            menu.one[0] = 130;
-            menu.one[2] = 48;
-            menu.one[3] = 'yellow';
-            menu.two[0] = 305;
-            menu.two[2] = 36;
-            menu.two[3] = 'white';
+            this.one[0] = 130;
+            this.one[2] = 48;
+            this.one[3] = 'yellow';
+            this.two[0] = 305;
+            this.two[2] = 36;
+            this.two[3] = 'white';
             break;
         case 2:
-            menu.two[0] = 295;
-            menu.two[2] = 48;
-            menu.two[3] = 'yellow';
-            menu.one[0] = 140;
-            menu.one[2] = 36;
-            menu.one[3] = 'white';
+            this.two[0] = 295;
+            this.two[2] = 48;
+            this.two[3] = 'yellow';
+            this.one[0] = 140;
+            this.one[2] = 36;
+            this.one[3] = 'white';
             break;
         default:
             break;
     }
 
-    menu.collision = false;
+    this.collision = false;
 };
 
 // This closes the menu and removes the listeners.
 Menu.prototype.close = function() {
-    menu.show = false;
-    menu.menuctx.clearRect(100, 150, 300, 300);
+    this.show = false;
+    this.menuctx.clearRect(100, 150, 300, 300);
     var canvas = document.getElementById('MenuLayer');
     canvas.removeEventListener('mousemove', function(evt) {
-        menu.mousePos = getMousePos(canvas, evt);
+        this.mousePos = getMousePos(canvas, evt);
     }, false);
 
     canvas.removeEventListener('click', function() {
@@ -188,31 +188,31 @@ Menu.prototype.close = function() {
 
     var body = document.getElementsByTagName("body")[0];
     body.removeChild(canvas);
-    menu.menuctx = null;
+    this.menuctx = null;
     world.gameStart(this.selectedItem);
 };
 
 // This is only called if the mouse is detected to reside over one of the avatars.
 Menu.prototype.avatarHover = function(name) {
-    menu.collision = true;
+    this.collision = true;
     switch (name) {
         case 'Jack':
-            if (menu.selectedItem != 1) {
-                menu.selectedItem = 1;
-                menu.selectionChange = true;
+            if (this.selectedItem != 1) {
+                this.selectedItem = 1;
+                this.selectionChange = true;
             }
             break;
         case 'Jill':
-            if (menu.selectedItem != 2) {
-                menu.selectedItem = 2;
-                menu.selectionChange = true;
+            if (this.selectedItem != 2) {
+                this.selectedItem = 2;
+                this.selectionChange = true;
             }
             break;
         default:
             break;
     }
-    if (menu.selectionChange) {
-        menu.selectionChange = false;
+    if (this.selectionChange) {
+        this.selectionChange = false;
     }
 
 };
@@ -220,15 +220,15 @@ Menu.prototype.avatarHover = function(name) {
 // Additional update function that clears the canvas and resets the selection to 0 if no
 // avatar is being hovered over.
 Menu.prototype.cycle = function(dt) {
-    if (!menu.collision) {
+    if (!this.collision) {
         this.selectedItem = 0;
-        menu.selectionChange = true;
+        this.selectionChange = true;
     }
 
-    menu.menuctx.clearRect(100, 150, 300, 300);
-    menu.draw();
-    menu.render();
-    menu.update(dt);
+    this.menuctx.clearRect(100, 150, 300, 300);
+    this.draw();
+    this.render();
+    this.update(dt);
 };
 
 // Self explanatory.
