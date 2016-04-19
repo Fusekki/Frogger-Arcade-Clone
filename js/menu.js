@@ -30,8 +30,9 @@ Menu.prototype.init = function() {
     canvas.width = 505;
     canvas.height = 606;
     canvas.style.zIndex = 8;
-    canvas.style.position = "absolute";
+     canvas.style.position = "absolute";
     canvas.style.border = "1px solid";
+    canvas.style.left = "350px";
 
     var body = document.getElementsByTagName("body")[0];
     body.appendChild(canvas);
@@ -162,6 +163,7 @@ Menu.prototype.update = function(dt) {
 
 // This closes the menu and removes the listeners.
 Menu.prototype.close = function() {
+    // world.sound_start.play();
     this.show = false;
     this.menuctx.clearRect(100, 150, 300, 300);
     var canvas = document.getElementById('MenuLayer');

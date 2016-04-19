@@ -12,6 +12,15 @@ var World = function() {
         respawntime: 0,
         removeidx: null
     };
+
+        // add audio elements
+    this.sound_start = new Audio('./audio/dp_frogger_coin.wav');
+    this.sound_extra = new Audio('./audio/dp_frogger_extra.wav');
+    this.sound_hop = new Audio('./audio/dp_frogger_hop.wav');
+    this.sound_plunk = new Audio('./audio/dp_frogger_plunk.wav');
+    this.sound_squash = new Audio('./audio/dp_frogger_squash.wav');
+    this.sound_time = new Audio('./audio/dp_frogger_time.wav');
+    this.sound_start.volume = 0.4;
 };
 
 //  Defines the play grid.
@@ -49,6 +58,7 @@ World.prototype.showMenu = function() {
 
 //  This function is called after player selection.  The actual gameplay starts here.
 World.prototype.gameStart = function(choice) {
+    world.sound_start.play();
     if (choice === 1) {
         player.sprite = 'images/char-boy.png';
     } else {
@@ -470,6 +480,7 @@ Player.prototype.update = function(dt, time) {
                 }
             }
         } else if (this.animation === 'move') {
+            world.sound_hop.play();
             switch (this.animation_d) {
                 case 'left':
                     if (this.anime_dest < this.x) {
@@ -517,6 +528,7 @@ Player.prototype.update = function(dt, time) {
         }
     }
     if (this.y <= 0 && this.animation != 'jump') {
+        world.sound_time.play();
         this.score += 100;
         this.animate = true;
         this.animation = 'jump';
