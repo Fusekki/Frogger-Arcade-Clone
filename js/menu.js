@@ -29,13 +29,24 @@ Menu.prototype.init = function() {
     canvas.id = "MenuLayer";
     canvas.width = 505;
     canvas.height = 606;
-    canvas.style.zIndex = 8;
-     canvas.style.position = "absolute";
+    canvas.style.zIndex = 3;
+    canvas.style.position = "absolute";
     canvas.style.border = "1px solid";
-    canvas.style.left = "350px";
 
-    var body = document.getElementsByTagName("body")[0];
-    body.appendChild(canvas);
+
+    if (window.matchMedia("(min-width: 1440px)").matches) {
+        // do not scale
+        console.log('do not scale.');
+        // canvas.style.left = "350px";
+    } else {
+        console.log('going to scale.')
+        canvas.style.height = window.innerHeight + 'px';
+        canvas.style.width = window.innerWidth + 'px';
+    }
+
+    // var body = document.getElementsByTagName("body")[0];
+    document.getElementById('container').appendChild(canvas);
+    // body.appendChild(canvas);
     this.show = true;
 };
 
@@ -188,8 +199,8 @@ Menu.prototype.close = function() {
         }
     }, false);
 
-    var body = document.getElementsByTagName("body")[0];
-    body.removeChild(canvas);
+    var parent = document.getElementById("container");
+    parent.removeChild(canvas);
     this.menuctx = null;
     world.gameStart(this.selectedItem);
 };

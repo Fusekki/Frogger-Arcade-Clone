@@ -1,12 +1,21 @@
 body {
-    text-align: center;
+/*    text-align: center;*/
     background-color: black;
+    margin: 0;
+}
+
+.canvas-overlay {
+    position: relative;
 }
 
 canvas {
 /*    position: absolute;
     top: 0;
     left: 0;*/
+}
+
+canvas {
+    position: absolute;
 }
 
 .score, .lives, .topscore {
@@ -26,6 +35,8 @@ canvas {
     font-size: 30px;
     cursor: default;
     display: none;
+    text-align: center;
+    z-index: 2;
 }
 
 .game-over span {
@@ -47,3 +58,11 @@ canvas {
     font-size: 30px;
     cursor: default;
 }
+
+@media screen and (min-width: 1440px) {
+    body {
+/*        text-align: center;*/
+    }
+
+}
+

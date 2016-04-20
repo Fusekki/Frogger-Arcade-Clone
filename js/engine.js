@@ -25,9 +25,70 @@ var GameEngine = function(global) {
         ctx = canvas.getContext('2d'),
         lastTime;
 
+
+    // if (window.matchMedia("(max-width: 320px)").matches) {
+    //   // 320 x 568
+    //   console.log('iphone 5P detected');
+    // } else if (window.matchMedia("(max-width: 375px)").matches) {
+    //     // 375 x 667
+    //     console.log('iphone 6P detected');
+
+    // } else if (window.matchMedia("(max-width: 414px)").matches) {
+    //     // 414 x 736
+    //     console.log('iphone 6+P detected');
+
+    // } else if (window.matchMedia("(max-width: 568px)").matches) {
+    //   // 568 x 320
+    //   console.log('iphone 5L detected');
+    // }  else if (window.matchMedia("(max-width: 667px)").matches) {
+    //     // 667 x 375
+    //     console.log('iphone 6L detected');
+
+    // } else if (window.matchMedia("(max-width: 736px)").matches) {
+    //     // 736 x 414
+    //     console.log('iphone 6+L detected');
+
+    // } else if (window.matchMedia("(max-width: 768px)").matches) {
+    //     // 758 x 1024
+    //     console.log('iPad P detected');
+
+    // } else if (window.matchMedia("(max-width: 1024px)").matches) {
+    //     // 1024 x 768
+    //     console.log('iPad L detected');
+
+    // } else if (window.matchMedia("(min-width: 1440px)").matches) {
+    //     // 1440 x ??
+    //     console.log('Large Screen detected.');
+
+    // }
+    // Setting hardware scaling
     canvas.width = 505;
+
     canvas.height = 606;
-    doc.body.appendChild(canvas);
+    document.getElementById('container').appendChild(canvas);
+    canvas.setAttribute('id', 'canvas-game');
+
+    if (window.matchMedia("(min-width: 1440px)").matches) {
+        // do not scale
+        console.log('do not scale.');
+        var el = document.getElementById('canvas-game');
+        var s = window.getComputedStyle(el);
+        var left = s.getPropertyValue('left');
+        console.log(left);
+
+
+    } else {
+        console.log('going to scale.')
+        canvas.style.height = window.innerHeight + 'px';
+        canvas.style.width = window.innerWidth + 'px';
+
+    }
+
+
+
+
+
+    // doc.body.appendChild(canvas);
     this.paused = false;
 
     /* This function serves as the kickoff point for the game loop itself
