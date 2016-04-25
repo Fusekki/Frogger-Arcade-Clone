@@ -10,22 +10,30 @@ var Menu = function(items) {
     this.one = [140, 410, 36, 'white'];
     this.two = [305, 410, 36, 'white'];
     this.show = false;
-    this.menuctx = null;
+    this.menuctx = null,
+    this.canvas = null;
     this.mousePos = {
         x: 0,
         y: 0
     };
     this.mousePos.hitbox = new Hitbox(0, 0, 1, 1);
+
     var boyAvatar = new Avatar(125, 200, items[1], 'images/char-boy.png');
     var girlAvatar = new Avatar(275, 200, items[2], 'images/char-cat-girl.png');
     this.allAvatars = [];
     this.allAvatars.push(boyAvatar);
     this.allAvatars.push(girlAvatar);
+    this.touchPos = {
+        x: 0,
+        y: 0
+    };
+    this.touchPos.hitbox = new Hitbox(0, 0, 1, 1);
+
 };
 
 //  Called to initiate the Menu.  Creates the additional canvas and appends it to document.
 Menu.prototype.init = function() {
-    var canvas = document.createElement('canvas');
+    canvas = document.createElement('canvas');
     canvas.id = "MenuLayer";
     canvas.width = 505;
     canvas.height = 606;
@@ -33,22 +41,32 @@ Menu.prototype.init = function() {
     canvas.style.position = "absolute";
     canvas.style.border = "1px solid";
 
-
-    if (window.matchMedia("(min-width: 1440px)").matches) {
-        // do not scale
-        console.log('do not scale.');
-        // canvas.style.left = "350px";
-    } else {
-        console.log('going to scale.')
-        canvas.style.height = window.innerHeight + 'px';
-        canvas.style.width = window.innerWidth + 'px';
-    }
-
     // var body = document.getElementsByTagName("body")[0];
     document.getElementById('container').appendChild(canvas);
-    // body.appendChild(canvas);
     this.show = true;
+
+    // Get the dimensions of the viewport
+    var viewport = {
+      width: window.innerWidth,
+      height: window.innerHeight
+    };
+    multiplier = Math.min((viewport.height / canvas.height), (viewport.width / canvas.width));
+    // this.resizeMenu();
+    // window.addEventListener("resize", engine.resizeMenu);
+
 };
+
+ Menu.prototype.resizeMenu = function () {
+
+    var actualCanvasWidth = canvas.width * multiplier;
+    var actualCanvasHeight = canvas.height * multiplier;
+
+    // Resize game
+    canvas.style.width = actualCanvasWidth + "px";
+    canvas.style.height = actualCanvasHeight + "px";
+
+  };
+
 
 // This is called after init method.  This only happens right when the menu switches to show.
 Menu.prototype.refresh = function() {
@@ -60,6 +78,7 @@ Menu.prototype.refresh = function() {
         menu.mousePos = getMousePos(canvas, evt);
         menu.mousePos.hitbox = new Hitbox(0, 0, 1, 1);
     }, false);
+
 
     canvas.addEventListener('click', function() {
         if (menu.selectedItem !== 0) {
@@ -78,6 +97,34 @@ Menu.prototype.refresh = function() {
         }
     }, false);
     this.draw();
+
+    canvas.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        handleAvatar.set(e.touches[0]);
+    }, false);
+
+    canvas.addEventListener('touchend', function(e) {
+        e.preventDefault();
+
+          if (menu.selectedItem !== 0) {
+            switch (menu.selectedItem) {
+                case 1:
+                    menu.fade = true;
+                    menu.fade_d = 0;
+                    break;
+                case 2:
+                    menu.fade = true;
+                    menu.fade_d = 0;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }, false);
+
+
+
+
 };
 
 // This draws the menu, fills in the background, and places the "Choose Player" text.
@@ -199,6 +246,30 @@ Menu.prototype.close = function() {
         }
     }, false);
 
+    canvas.removeEventListener('touchstart', function(e) {
+        e.preventDefault();
+        handleAvatar.set(e.touches[0]);
+    }, false);
+
+    canvas.removeEventListener('touchend', function(e) {
+        e.preventDefault();
+
+          if (menu.selectedItem !== 0) {
+            switch (menu.selectedItem) {
+                case 1:
+                    menu.fade = true;
+                    menu.fade_d = 0;
+                    break;
+                case 2:
+                    menu.fade = true;
+                    menu.fade_d = 0;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }, false);
+
     var parent = document.getElementById("container");
     parent.removeChild(canvas);
     this.menuctx = null;
@@ -228,6 +299,8 @@ Menu.prototype.avatarHover = function(name) {
         menu.selectionChange = false;
     }
 
+
+
 };
 
 // Additional update function that clears the canvas and resets the selection to 0 if no
@@ -246,10 +319,12 @@ Menu.prototype.cycle = function(dt) {
 
 // Self explanatory.
 function getMousePos(canvas, evt) {
+    var offsetLeft = menu.menuctx.canvas.offsetLeft;
+    var offsetTop = menu.menuctx.canvas.offsetTop;
     var rect = canvas.getBoundingClientRect();
     return {
-        x: evt.clientX - rect.left,
-        y: evt.clientY - rect.top
+        x: evt.clientX   / multiplier,
+        y: evt.clientY  / multiplier
     };
 }
 
@@ -275,3 +350,28 @@ Avatar.prototype.render = function() {
         menu.menuctx.strokeStyle = "black";
     }
 };
+
+handleAvatar = {
+    x: 0,
+    y: 0,
+    tapped :false,
+
+    set: function(data) {
+        // console.log(data.pageX);
+        // console.log(ctx.canvas.offsetLeft);
+        //         console.log(ctx.canvas.offsetTop);
+        // console.log(engine.scale);
+
+        var offsetLeft = menu.menuctx.canvas.offsetLeft;
+        var offsetTop = menu.menuctx.canvas.offsetTop;
+        this.x = (data.pageX - offsetLeft) / multiplier;
+        this.y = (data.pageY - offsetTop) / multiplier;
+        this.tapped = true;
+         console.log(this.x);
+         console.log(this.y);
+        menu.touchPos.x = this.x;
+        menu.touchPos.y = this.y;
+        console.log(menu.touchPos.x);
+        console.log(menu.touchPos.y);
+    }
+}

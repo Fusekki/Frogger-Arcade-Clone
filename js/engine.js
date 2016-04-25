@@ -25,6 +25,9 @@ var GameEngine = function(global) {
         ctx = canvas.getContext('2d'),
         lastTime;
 
+        this.mobile = false;
+        this.multiplier = null;
+
 
     // if (window.matchMedia("(max-width: 320px)").matches) {
     //   // 320 x 568
@@ -71,19 +74,46 @@ var GameEngine = function(global) {
     if (window.matchMedia("(min-width: 1440px)").matches) {
         // do not scale
         console.log('do not scale.');
-        var el = document.getElementById('canvas-game');
-        var s = window.getComputedStyle(el);
-        var left = s.getPropertyValue('left');
-        console.log(left);
-
-
     } else {
         console.log('going to scale.')
-        canvas.style.height = window.innerHeight + 'px';
-        canvas.style.width = window.innerWidth + 'px';
-
+        this.mobile = true;
     }
+     console.log(this.mobile);
+    // this.offsetLeft = canvas.offsetLeft;
+    // this.offsetTop = canvas.offsetTop;
 
+
+    // this.scale = window.innerWidth / window.innerHeight;
+
+        viewport = {
+            width: window.innerWidth,
+            height: window.innerHeight
+        };
+
+    // if (canvas.height / canvas.width > viewport.height / viewport.width) {
+    //       newGameHeight = viewport.height;
+    //       newGameWidth = newGameHeight * canvas.width / canvas.height;
+    //       this.scale = newGameWidth / newGameHeight;
+
+    // } else {
+    //   newGameWidth = viewport.width;
+    //   newGameHeight = newGameWidth * canvas.height / canvas.width;
+    //     this.scale = newGameWidth / newGameHeight;
+    // }
+
+    // Resize game
+    // canvas.style.width = newGameWidth + "px";
+    // canvas.style.height = newGameHeight + "px";
+
+    // this.multiplier = Math.min((viewport.height / canvas.height), (viewport.width / canvas.width));
+    // var actualCanvasWidth = canvas.width * this.multiplier;
+    // var actualCanvasHeight = canvas.height * this.multiplier;
+
+
+
+    // Resize game
+    // canvas.style.width = actualCanvasWidth + "px";
+    // canvas.style.height = actualCanvasHeight + "px";
 
 
 
@@ -126,6 +156,24 @@ var GameEngine = function(global) {
 
     };
 
+    this.resizeGame = function() {
+
+        console.log('resize game called');
+
+
+
+    this.multiplier = Math.min((viewport.height / canvas.height), (viewport.width / canvas.width));
+    var actualCanvasWidth = canvas.width * this.multiplier;
+    var actualCanvasHeight = canvas.height * this.multiplier;
+
+
+
+    // Resize game
+    canvas.style.width = actualCanvasWidth + "px";
+    canvas.style.height = actualCanvasHeight + "px";
+
+    }
+
 
     /* This function does some initial setup that should only occur once,
      * particularly setting the lastTime variable that is required for the
@@ -135,6 +183,11 @@ var GameEngine = function(global) {
         lastTime = Date.now();
         engine.main();
         world.alignGameOver();
+        console.log(engine.mobile);
+        console.log(engine.multiplier);
+        window.addEventListener("resize", engine.resizeGame);
+        engine.resizeGame();
+        world.createListeners(engine.mobile, engine.multiplier);
     };
 
     // Game over
@@ -145,6 +198,8 @@ var GameEngine = function(global) {
             document.getElementById('game-over').style.display = "none";
         }
     };
+
+
 
     /* This function is called by main (our game loop) and itself calls all
      * of the functions which may need to update entity's data. Based on how
@@ -162,6 +217,7 @@ var GameEngine = function(global) {
 
         if (menu.show) {
             checkCollisions(menu.mousePos, menu.allAvatars, menu.avatarHover, 'avatar');
+            checkCollisions(menu.touchPos, menu.allAvatars, menu.avatarHover, 'avatar');
             menu.cycle(dt);
         }
 
@@ -181,6 +237,9 @@ var GameEngine = function(global) {
     }
 
     function checkCollisions(source, props, action, type, time) {
+        if (source == menu.touchPos) {
+            // console.log(menu.touchPos);
+        }
 
         var collision = false;
         var item, obj, entityx, entityy, entityh, entityw, sourcex, sourcey, sourcew, sourceh;
@@ -224,6 +283,8 @@ var GameEngine = function(global) {
                                 action(obj, time);
                                 break;
                             case 'avatar':
+                                // console.log('collision.');
+                                // console.log(obj.name);
                                 obj.animation = 'death';
                                 action(obj.name, true);
                                 break;

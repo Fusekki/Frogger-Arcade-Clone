@@ -11,7 +11,7 @@ var World = function() {
         max: 3,
         respawntime: 0,
         removeidx: null
-    };
+    },
 
         // add audio elements
     this.sound_start = new Audio('./audio/dp_frogger_coin.wav');
@@ -21,7 +21,9 @@ var World = function() {
     this.sound_squash = new Audio('./audio/dp_frogger_squash.wav');
     this.sound_time = new Audio('./audio/dp_frogger_time.wav');
     this.sound_start.volume = 0.4;
-};
+
+
+
 
 //  Defines the play grid.
 World.prototype.grid = {
@@ -40,8 +42,87 @@ World.prototype.grid = {
     }
 };
 
+World.prototype.createListeners = function(mobile, multiplier) {
+    console.log(multiplier);
+    console.log(mobile);
+    this.isMobile = mobile;
+    this.multiplier = multiplier;
+
+    console.log(this.grid);
+
+    var item;
+    console.log('here');
+    console.log(Object.keys(this.grid.x).length);
+    console.log(this.grid.x[1]);
+    // for (i = 1; i < Object.keys(this.grid.x).length; i++) {
+    //     item = this.grid.x[i];
+    //     // console.log(item);
+    //     // console.log(this.multiplier);
+    //     this.grid.x[i] = item;
+    //     // console.log(this.grid.x[i]);
+    // }
+
+    // for (j = 1; j < Object.keys(this.grid.y).length; j++) {
+    //         item = this.grid.y[j];
+    //         // console.log(item);
+    //         // console.log(this.multiplier);
+    //         this.grid.y[j] = item * this.multiplier;
+    //         console.log(this.grid.y[j]);
+    //     }
+
+    // this.grid = this.multiplier * this.grid;
+    console.log(this.grid);
+
+    this.canvasElement = document.getElementById('canvas-game');
+    this.offsetLeft = ctx.canvas.offsetLeft;
+    this.offsetTop = ctx.canvas.offsetTop;
+    this.menuElement = document.getElementById('start-touch');
+    console.log(this.isMobile);
+
+        if (mobile) {
+
+            this.menuElement.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                // the event object has an array
+                // named touches; we just want
+                // the first touch
+                world.showMenu();
+            }, false);
+
+            this.canvasElement.addEventListener('touchmove', function(e) {
+                // we're not interested in this,
+                // but prevent default behaviour
+                // so the screen doesn't scroll
+                // or zoom
+                e.preventDefault();
+            }, false);
+            this.canvasElement.addEventListener('touchend', function(e) {
+                // as above
+                e.preventDefault();
+            }, false);
+        };
+    }
+}
+
 // When invoked, shows the player menu.
 World.prototype.showMenu = function() {
+    if (this.mobile) {
+        this.menuElement.removeEventListener('touchstart', function(e) {
+            e.preventDefault();
+            // the event object has an array
+            // named touches; we just want
+            // the first touch
+            world.showMenu();
+        }, false);
+
+        this.canvasElement.removeEventListener('touchend', function(e) {
+                // as above
+                e.preventDefault();
+            }, false);
+    }
+
+
+
     if (!menu.fade) {
         menu.fade = true;
         menu.fade_d = 1;
@@ -58,6 +139,7 @@ World.prototype.showMenu = function() {
 
 //  This function is called after player selection.  The actual gameplay starts here.
 World.prototype.gameStart = function(choice) {
+
     world.sound_start.play();
     if (choice === 1) {
         player.sprite = 'images/char-boy.png';
@@ -82,8 +164,29 @@ World.prototype.gameStart = function(choice) {
     allEnemies = [];
     addEnemies(totalEnemies);
     this.addLoot(this.lootstats.total);
+    // Add event listeners
 
     document.addEventListener('keyup', keyPress);
+    // listen for touches
+    // window.addEventListener("touchstart", handleStart, false);
+
+    this.canvasElement.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        // the event object has an array
+        // named touches; we just want
+        // the first touch
+        handleStart.set(e.touches[0]);
+    }, false);
+
+    this.canvasElement.addEventListener('touchend', function(e) {
+        // as above
+        e.preventDefault();
+        // console.log(e.changedTouches[0]);
+        identifyTouchLoc.set(e.changedTouches[0]);
+    }, false);
+
+
+
     document.getElementById('scoretotal').style.display = "block";
     document.getElementById('toptotal').style.display = "block";
     document.getElementById('livestotal').style.display = "block";
@@ -107,6 +210,8 @@ World.prototype.gameEnd = function() {
 World.prototype.alignGameOver = function() {
     var x = ctx.canvas.getBoundingClientRect().left;
     var width = ctx.canvas.getBoundingClientRect().width;
+    console.log(x);
+    console.log(ctx.canvas.width);
 
     // Centers the game-over message
     document.getElementById('game-over').style.left = x + width / 3 + 'px';
@@ -254,6 +359,7 @@ World.prototype.cycleloot = function() {
     }
 };
 
+
 // This is called when the player collides with loot.
 World.prototype.loseLoot = function(entity, time) {
     var idx = allLoot.indexOf(entity);
@@ -383,6 +489,8 @@ function Player(type) {
     this.speed = 100;
     this.startingx = 501 / 2 - (this.width / 2);
     this.startingy = 606 - this.height;
+    // this.startingx = 0;
+    // this.startingy=0;
     this.score = 0;
     this.hitbox = new Hitbox(17, 63, 67, 76);
     this.deathanimate = 1;
@@ -590,8 +698,40 @@ Player.prototype.loseLife = function() {
     updateScore();
 };
 
+Player.prototype.checkDirection = function( touchX, touchY ) {
+    console.log(this.x + ', ' + this.y);
+    var distanceX = touchX + player.width / 2 - this.x;
+    // var distanceY = Math.abs(this.y + player.height - touchY);
+    var distanceY = touchY + player.height / 2 - this.y;
+
+    console.log('x distance: ' + distanceX);
+    console.log('y distance: ' + distanceY);
+
+    if (Math.abs(distanceX) > Math.abs(distanceY)) {
+        console.log('horizontal move');
+        if (distanceX > 0) {
+            console.log('move right.');
+            this.handleInput('right');
+        } else {
+             console.log('move left.');
+            this.handleInput('left');
+        }
+    } else {
+        console.log('vertical move.');
+        if (distanceY > 0) {
+            console.log('move down.');
+            this.handleInput('down');
+        } else {
+             console.log('move up.');
+            this.handleInput('up');
+        }
+    }
+
+}
+
 // Keypress function.
 function keyPress(event) {
+    console.log('key pressed.');
     var allowedKeys = {
         //       32: 'space',
         37: 'left',
@@ -601,6 +741,74 @@ function keyPress(event) {
     };
     player.handleInput(allowedKeys[event.keyCode]);
 }
+
+handleStart = {
+    x: 0,
+    y: 0,
+    tapped :false,
+
+    set: function(data) {
+        // console.log(data);
+        // console.log(data.pageX);
+        // console.log(ctx.canvas.offsetLeft);
+        // console.log(ctx.canvas.offsetTop);
+        // console.log(world.offsetLeft);
+
+        this.x = (data.pageX  - world.offsetLeft);
+        this.y = (data.pageY  - world.offsetTop);
+        this.tapped = true;
+        console.log('Touch start: ' + this.x + ', ' + this.y);
+
+        player.checkDirection(this.x, this.y);
+
+    }
+};
+
+identifyTouchLoc = {
+    x: 0,
+    y: 0,
+    tapped :false,
+
+    set: function(data) {
+        // console.log(data);
+        // console.log(data.pageX);
+        // console.log(ctx.canvas.offsetLeft);
+        // console.log(ctx.canvas.offsetTop);
+        // console.log(world.offsetLeft);
+
+        this.x = (data.pageX - world.offsetLeft);
+        this.y = (data.pageY - world.offsetTop);
+        this.tapped = true;
+        // console.log('Touch End: ' + this.x + ', ' + this.y);
+
+        var deltaX = this.x - player.x;
+        var deltaY = this.y - player.y;
+
+        // var angle = Math.atan2(deltaY , deltaX);
+        // console.log('angle = ' + angle);
+
+    }
+
+};
+
+// function handleStart(evt) {
+//   evt.preventDefault();
+//   console.log("touchstart.");
+//   var el = document.getElementsByTagName("canvas")[0];
+//   var ctx = el.getContext("2d");
+//   var touches = evt.changedTouches;
+
+//   for (var i = 0; i < touches.length; i++) {
+//     console.log("touchstart:" + i + "...");
+//     ongoingTouches.push(copyTouch(touches[i]));
+//     var color = colorForTouch(touches[i]);
+//     ctx.beginPath();
+//     ctx.arc(touches[i].pageX, touches[i].pageY, 4, 0, 2 * Math.PI, false);  // a circle at the start
+//     ctx.fillStyle = color;
+//     ctx.fill();
+//     log("touchstart:" + i + ".");
+//   }
+// }
 
 Player.prototype.handleInput = function(key) {
     if (this.animation === null) {
@@ -679,10 +887,13 @@ function addEnemies(total) {
     }
 }
 
+
 // Instantiating all variables.
 player = new Player('player');
 world = new World();
 menu = new Menu(["Choose Player", "Jack", "Jill"]);
+
+
 
 var hitboxEnabled = false,
     allEnemies = [],
