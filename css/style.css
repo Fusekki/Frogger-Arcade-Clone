@@ -1,12 +1,21 @@
 body {
-    text-align: center;
+/*    text-align: center;*/
     background-color: black;
+    margin: 0;
+}
+
+.canvas-overlay {
+    position: relative;
+}
+
+canvas {
+/*    position: absolute;
+    top: 0;
+    left: 0;*/
 }
 
 canvas {
     position: absolute;
-    top: 0;
-    left: 0;
 }
 
 .score, .lives, .topscore {
@@ -23,13 +32,15 @@ canvas {
     top: 200px;
     color: #ff7f00;
     font-family: Helvetica, sans-serif;
-    font-size: 30px;
+    font-size: 5vh;
     cursor: default;
     display: none;
+    text-align: center;
+    z-index: 2;
 }
 
 .game-over span {
-    font-size: 20px;
+    font-size: 4vh;
     cursor: pointer;
     position: relative;
 }
@@ -41,9 +52,17 @@ canvas {
 .loading {
     position: absolute;
     top: 100px;
-    left: 210px;
+/*    left: 210px;*/
     color: #ff7f00;
     font-family: Helvetica, sans-serif;
     font-size: 30px;
     cursor: default;
 }
+
+@media screen and (min-width: 1440px) {
+    body {
+/*        text-align: center;*/
+    }
+
+}
+

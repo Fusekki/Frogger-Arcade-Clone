@@ -25,9 +25,100 @@ var GameEngine = function(global) {
         ctx = canvas.getContext('2d'),
         lastTime;
 
+        this.mobile = false;
+        this.multiplier = null;
+
+
+    // if (window.matchMedia("(max-width: 320px)").matches) {
+    //   // 320 x 568
+    //   console.log('iphone 5P detected');
+    // } else if (window.matchMedia("(max-width: 375px)").matches) {
+    //     // 375 x 667
+    //     console.log('iphone 6P detected');
+
+    // } else if (window.matchMedia("(max-width: 414px)").matches) {
+    //     // 414 x 736
+    //     console.log('iphone 6+P detected');
+
+    // } else if (window.matchMedia("(max-width: 568px)").matches) {
+    //   // 568 x 320
+    //   console.log('iphone 5L detected');
+    // }  else if (window.matchMedia("(max-width: 667px)").matches) {
+    //     // 667 x 375
+    //     console.log('iphone 6L detected');
+
+    // } else if (window.matchMedia("(max-width: 736px)").matches) {
+    //     // 736 x 414
+    //     console.log('iphone 6+L detected');
+
+    // } else if (window.matchMedia("(max-width: 768px)").matches) {
+    //     // 758 x 1024
+    //     console.log('iPad P detected');
+
+    // } else if (window.matchMedia("(max-width: 1024px)").matches) {
+    //     // 1024 x 768
+    //     console.log('iPad L detected');
+
+    // } else if (window.matchMedia("(min-width: 1440px)").matches) {
+    //     // 1440 x ??
+    //     console.log('Large Screen detected.');
+
+    // }
+    // Setting hardware scaling
     canvas.width = 505;
+
     canvas.height = 606;
-    doc.body.appendChild(canvas);
+    document.getElementById('container').appendChild(canvas);
+    canvas.setAttribute('id', 'canvas-game');
+
+    if (window.matchMedia("(min-width: 1440px)").matches) {
+        // do not scale
+        console.log('do not scale.');
+    } else {
+        console.log('going to scale.')
+        this.mobile = true;
+    }
+     console.log(this.mobile);
+    // this.offsetLeft = canvas.offsetLeft;
+    // this.offsetTop = canvas.offsetTop;
+
+
+    // this.scale = window.innerWidth / window.innerHeight;
+
+        viewport = {
+            width: window.innerWidth,
+            height: window.innerHeight
+        };
+
+    // if (canvas.height / canvas.width > viewport.height / viewport.width) {
+    //       newGameHeight = viewport.height;
+    //       newGameWidth = newGameHeight * canvas.width / canvas.height;
+    //       this.scale = newGameWidth / newGameHeight;
+
+    // } else {
+    //   newGameWidth = viewport.width;
+    //   newGameHeight = newGameWidth * canvas.height / canvas.width;
+    //     this.scale = newGameWidth / newGameHeight;
+    // }
+
+    // Resize game
+    // canvas.style.width = newGameWidth + "px";
+    // canvas.style.height = newGameHeight + "px";
+
+    // this.multiplier = Math.min((viewport.height / canvas.height), (viewport.width / canvas.width));
+    // var actualCanvasWidth = canvas.width * this.multiplier;
+    // var actualCanvasHeight = canvas.height * this.multiplier;
+
+
+
+    // Resize game
+    // canvas.style.width = actualCanvasWidth + "px";
+    // canvas.style.height = actualCanvasHeight + "px";
+
+
+
+
+    // doc.body.appendChild(canvas);
     this.paused = false;
 
     /* This function serves as the kickoff point for the game loop itself
@@ -65,6 +156,24 @@ var GameEngine = function(global) {
 
     };
 
+    this.resizeGame = function() {
+
+        console.log('resize game called');
+
+
+
+    this.multiplier = Math.min((viewport.height / canvas.height), (viewport.width / canvas.width));
+    var actualCanvasWidth = canvas.width * this.multiplier;
+    var actualCanvasHeight = canvas.height * this.multiplier;
+
+
+
+    // Resize game
+    canvas.style.width = actualCanvasWidth + "px";
+    canvas.style.height = actualCanvasHeight + "px";
+
+    }
+
 
     /* This function does some initial setup that should only occur once,
      * particularly setting the lastTime variable that is required for the
@@ -74,6 +183,11 @@ var GameEngine = function(global) {
         lastTime = Date.now();
         engine.main();
         world.alignGameOver();
+        console.log(engine.mobile);
+        console.log(engine.multiplier);
+        window.addEventListener("resize", engine.resizeGame);
+        engine.resizeGame();
+        world.createListeners(engine.mobile, engine.multiplier);
     };
 
     // Game over
@@ -84,6 +198,8 @@ var GameEngine = function(global) {
             document.getElementById('game-over').style.display = "none";
         }
     };
+
+
 
     /* This function is called by main (our game loop) and itself calls all
      * of the functions which may need to update entity's data. Based on how
@@ -101,6 +217,7 @@ var GameEngine = function(global) {
 
         if (menu.show) {
             checkCollisions(menu.mousePos, menu.allAvatars, menu.avatarHover, 'avatar');
+            checkCollisions(menu.touchPos, menu.allAvatars, menu.avatarHover, 'avatar');
             menu.cycle(dt);
         }
 
@@ -120,6 +237,9 @@ var GameEngine = function(global) {
     }
 
     function checkCollisions(source, props, action, type, time) {
+        if (source == menu.touchPos) {
+            // console.log(menu.touchPos);
+        }
 
         var collision = false;
         var item, obj, entityx, entityy, entityh, entityw, sourcex, sourcey, sourcew, sourceh;
@@ -145,6 +265,7 @@ var GameEngine = function(global) {
                         collision = true;
                         switch (type) {
                             case 'player':
+                                world.sound_squash.play();
                                 if (!player.armor) {
                                     //           console.log('player died.');
                                     if (source.animation != 'death') {
@@ -155,12 +276,15 @@ var GameEngine = function(global) {
                                 }
                                 break;
                             case 'loot':
+                                world.sound_plunk.play();
                                 obj.animate = true;
                                 obj.animation = 'death';
                                 //       console.log(obj.name);
                                 action(obj, time);
                                 break;
                             case 'avatar':
+                                // console.log('collision.');
+                                // console.log(obj.name);
                                 obj.animation = 'death';
                                 action(obj.name, true);
                                 break;
