@@ -1,7 +1,12 @@
+/** {
+  border: 1px solid red !important;
+}*/
+
 body {
 /*    text-align: center;*/
     background-color: black;
     margin: 0;
+    overflow: hidden;
 }
 
 .canvas-overlay {
@@ -23,6 +28,7 @@ canvas {
     top: 5px;
     color: #ff7f00;
     font-family: Helvetica, sans-serif;
+    font-size: 2vh;
     cursor: default;
     display: none;
 }

@@ -27,6 +27,9 @@ var GameEngine = function(global) {
 
         this.mobile = false;
         this.multiplier = null;
+        this.actualCanvasWidth = null;
+        this.actualCanvasHeight = null;
+
 
 
     // if (window.matchMedia("(max-width: 320px)").matches) {
@@ -160,17 +163,23 @@ var GameEngine = function(global) {
 
         console.log('resize game called');
 
-
-
-    this.multiplier = Math.min((viewport.height / canvas.height), (viewport.width / canvas.width));
-    var actualCanvasWidth = canvas.width * this.multiplier;
-    var actualCanvasHeight = canvas.height * this.multiplier;
-
-
-
-    // Resize game
-    canvas.style.width = actualCanvasWidth + "px";
-    canvas.style.height = actualCanvasHeight + "px";
+        this.multiplier = Math.min((viewport.height / canvas.height), (viewport.width / canvas.width));
+        this.actualCanvasWidth = canvas.width * this.multiplier;
+        this.actualCanvasHeight = canvas.height * this.multiplier;
+        console.log(this.actualCanvasHeight);
+        console.log(this.multiplier);
+        // /* portrait */
+        // @media screen and (orientation:portrait) {
+        //     this.actualCanvasHeight = canvas.height;
+        // }
+        //  landscape
+        // @media screen and (orientation:landscape) {
+        //     /* landscape-specific styles */
+        //     this.actualCanvasWidth = canvas.width;
+        // }
+        // Resize game
+        canvas.style.width = this.actualCanvasWidth + "px";
+        canvas.style.height = this.actualCanvasHeight + "px";
 
     }
 
@@ -180,14 +189,26 @@ var GameEngine = function(global) {
      * game loop.
      */
     this.init = function() {
+        console.log('in engine init');
         lastTime = Date.now();
-        engine.main();
-        world.alignGameOver();
+
+
         console.log(engine.mobile);
         console.log(engine.multiplier);
         window.addEventListener("resize", engine.resizeGame);
+        console.log('going to call resize');
         engine.resizeGame();
+        world.alignGameOver(engine.multiplier);
+        // Calls the gamecontroller
+        console.log('Starting controller: ' + engine.mobile);
+        if (engine.mobile) {
+            GameController.init();
+            // GameController.renderAreas();
+                console.log(GameController);
+        }
         world.createListeners(engine.mobile, engine.multiplier);
+
+        engine.main();
     };
 
     // Game over
@@ -225,6 +246,8 @@ var GameEngine = function(global) {
             checkCollisions(player, allEnemies, player.loseLife, 'player');
             checkCollisions(player, allLoot, world.loseLoot, 'loot', time);
         }
+
+
     }
 
     function checkBoundaries() {
@@ -360,6 +383,13 @@ var GameEngine = function(global) {
             }
         }
         renderEntities();
+
+// console.log(GameController.triggerRender);
+        if (engine.mobile) {
+            // console.log('engine triggered render');
+            GameController.renderWrapper();
+            // GameController.triggerRender = false;
+        }
 
         if (menu.show) {
             menu.render();

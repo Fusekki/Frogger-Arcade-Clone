@@ -21,6 +21,7 @@ var World = function() {
     this.sound_squash = new Audio('./audio/dp_frogger_squash.wav');
     this.sound_time = new Audio('./audio/dp_frogger_time.wav');
     this.sound_start.volume = 0.4;
+    this.multiplier = 0;
 
 
 
@@ -207,17 +208,21 @@ World.prototype.gameEnd = function() {
 };
 
 //  This aligns the text for the Game Over and Restart text.
-World.prototype.alignGameOver = function() {
+World.prototype.alignGameOver = function(multiplier) {
+    this.multiplier = multiplier;
+    console.log(world.multiplier);
     var x = ctx.canvas.getBoundingClientRect().left;
     var width = ctx.canvas.getBoundingClientRect().width;
+    // var width = engine.actualCanvasWidth;
+    console.log(width);
     console.log(x);
     console.log(ctx.canvas.width);
 
     // Centers the game-over message
-    document.getElementById('game-over').style.left = x + width / 3 + 'px';
-    document.getElementById('toptotal').style.left = x + width / 2.5 + 'px';
-    document.getElementById('scoretotal').style.left = x + width / 1.3 + 'px';
-    document.getElementById('livestotal').style.left = x + width / 8 + 'px';
+    document.getElementById('game-over').style.left = x + width / 4 + 'px';
+    document.getElementById('toptotal').style.left = x + width / 2.8 + 'px';
+    document.getElementById('scoretotal').style.left = x + width / 1.4 + 'px';
+    document.getElementById('livestotal').style.left = x + width / 15 + 'px';
     document.getElementById('game-over').style.display = "block";
 };
 

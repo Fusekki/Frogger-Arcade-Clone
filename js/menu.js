@@ -51,7 +51,7 @@ Menu.prototype.init = function() {
       height: window.innerHeight
     };
     multiplier = Math.min((viewport.height / canvas.height), (viewport.width / canvas.width));
-    // this.resizeMenu();
+    this.resizeMenu();
     // window.addEventListener("resize", engine.resizeMenu);
 
 };
@@ -367,11 +367,11 @@ handleAvatar = {
         this.x = (data.pageX - offsetLeft) / multiplier;
         this.y = (data.pageY - offsetTop) / multiplier;
         this.tapped = true;
-         console.log(this.x);
-         console.log(this.y);
+         // console.log(this.x);
+         // console.log(this.y);
         menu.touchPos.x = this.x;
         menu.touchPos.y = this.y;
-        console.log(menu.touchPos.x);
-        console.log(menu.touchPos.y);
+        // console.log(menu.touchPos.x);
+        // console.log(menu.touchPos.y);
     }
 }
