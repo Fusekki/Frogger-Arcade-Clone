@@ -23,6 +23,10 @@ canvas {
     position: absolute;
 }
 
+#canvas-game {
+    z-index: 0;
+}
+
 .score, .lives, .topscore {
     position: absolute;
     top: 5px;

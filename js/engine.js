@@ -288,7 +288,8 @@ var GameEngine = function(global) {
                         collision = true;
                         switch (type) {
                             case 'player':
-                                world.sound_squash.play();
+                                // world.sound_squash.play();
+                                soundManager.play('sound_squash');
                                 if (!player.armor) {
                                     //           console.log('player died.');
                                     if (source.animation != 'death') {
@@ -299,7 +300,8 @@ var GameEngine = function(global) {
                                 }
                                 break;
                             case 'loot':
-                                world.sound_plunk.play();
+                                // world.sound_plunk.play();
+                                soundManager.play('sound_plunk');
                                 obj.animate = true;
                                 obj.animation = 'death';
                                 //       console.log(obj.name);

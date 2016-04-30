@@ -65,7 +65,7 @@
 			right: {
 				type: 'buttons',
 				// position: { right: '17%', bottom: '28%' },
-				position: { right: '56%', bottom: '85%' },
+				position: { right: '56%', bottom: '89%' },
 				buttons: [{
 					offset: { x: '-13%', y: 0 },
 					label: 'X',
@@ -277,7 +277,7 @@
 			this.canvas.width = canvas.width;
 
 
-			this.offsetCanvasTop = engine.actualCanvasHeight;
+			this.offsetCanvasTop = engine.actualCanvasHeight - 40;
 
 
 

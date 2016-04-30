@@ -14,14 +14,155 @@ var World = function() {
     },
 
         // add audio elements
-    this.sound_start = new Audio('./audio/dp_frogger_coin.wav');
-    this.sound_extra = new Audio('./audio/dp_frogger_extra.wav');
-    this.sound_hop = new Audio('./audio/dp_frogger_hop.wav');
-    this.sound_plunk = new Audio('./audio/dp_frogger_plunk.wav');
-    this.sound_squash = new Audio('./audio/dp_frogger_squash.wav');
-    this.sound_time = new Audio('./audio/dp_frogger_time.wav');
-    this.sound_start.volume = 0.4;
-    this.multiplier = 0;
+    // this.sound_start = new Audio('./audio/dp_frogger_coin.wav');
+    // this.sound_extra = new Audio('./audio/dp_frogger_extra.wav');
+    // this.sound_hop = new Audio('./audio/dp_frogger_hop.wav');
+    // this.sound_plunk = new Audio('./audio/dp_frogger_plunk.wav');
+    // this.sound_squash = new Audio('./audio/dp_frogger_squash.wav');
+    // this.sound_time = new Audio('./audio/dp_frogger_time.wav');
+    // this.sound_start.volume = 0.4;
+    // this.multiplier = 0;
+
+    // this.sound_start = new Howl({
+    //     urls: ['./audio/dp_frogger_coin.wav', './audio/dp_frogger_coin.mp3', './audio/dp_frogger_coin.ogg'],
+    //     volume: 0.5,
+    //     autoplay: false,
+    //     loop: false,
+
+    //     onend: function() {
+    //         console.log('finished sound.');
+    //     }
+    // });
+    //     this.sound_extra = new Howl({
+    //     urls: ['./audio/dp_frogger_extra.wav', './audio/dp_frogger_extra.mp3', './audio/dp_frogger_extra.ogg'],
+    //     volume: 0.5,
+    //             autoplay: false,
+    //     loop: false,
+    //             onend: function() {
+    //         console.log('finished sound.');
+    //     }
+    // });
+    //     this.sound_hop = new Howl({
+    //     urls: ['./audio/dp_frogger_hop.wav', './audio/dp_frogger_hop.mp3', './audio/dp_frogger_hop.ogg'],
+    //     volume: 0.5,
+    //             autoplay: false,
+    //     loop: false,
+    //             onend: function() {
+    //         console.log('finished sound.');
+    //     }
+    // });
+    //     this.sound_plunk = new Howl({
+    //     urls: ['./audio/dp_frogger_plunk.wav', './audio/dp_frogger_plunk.mp3', './audio/dp_frogger_plunk.ogg'],
+    //     volume: 0.5,
+    //             autoplay: false,
+    //     loop: false,
+    //             onend: function() {
+    //         console.log('finished sound.');
+    //     }
+    // });
+    //     this.sound_squash = new Howl({
+    //     urls: ['./audio/dp_frogger_squash.wav', './audio/dp_frogger_squash.mp3', './audio/dp_frogger_squash.ogg'],
+    //     volume: 0.5,
+    //             autoplay: false,
+    //     loop: false,
+    //             onend: function() {
+    //         console.log('finished sound.');
+    //     }
+    // });
+    //     this.sound_time = new Howl({
+    //     urls: ['./audio/dp_frogger_time.wav', './audio/dp_frogger_time.mp3', './audio/dp_frogger_time.wav'],
+    //     volume: 0.5,
+    //             autoplay: false,
+    //     loop: false,
+    //             onend: function() {
+    //         console.log('finished sound.');
+    //     }
+    // });
+    this.audio = [],
+    soundManager.setup({
+      url: './swf/',
+      flashVersion: 9, // optional: shiny features (default = 8)
+      // optional: ignore Flash where possible, use 100% HTML5 mode
+      // preferFlash: false,
+      onready: function() {
+        // Ready to use; soundManager.createSound() etc. can now be called.
+        console.log('soundmanager loaded.');
+        world.audio.push(soundManager.createSound({
+              id: 'sound_start',
+              url: ['./audio/dp_frogger_coin.mp3', './audio/dp_frogger_coin.ogg'],
+              autoLoad: true,
+              autoPlay: false,
+              onload: function() {
+                console.log('The sound '+this.id+' loaded!');
+              },
+              volume: 50
+            }));
+
+        world.audio.push(soundManager.createSound({
+              id: 'sound_extra',
+              url: ['./audio/dp_frogger_extra.mp3', './audio/dp_frogger_extra.ogg'],
+              autoLoad: true,
+              autoPlay: false,
+              onload: function() {
+                console.log('The sound '+this.id+' loaded!');
+              },
+              volume: 50
+            }));
+
+         world.audio.push(soundManager.createSound({
+              id: 'sound_hop',
+              url: ['./audio/dp_frogger_hop.mp3', './audio/dp_frogger_hop.ogg'],
+              autoLoad: true,
+              autoPlay: false,
+              onload: function() {
+                console.log('The sound '+this.id+' loaded!');
+              },
+              volume: 50
+            }));
+
+        world.audio.push(soundManager.createSound({
+              id: 'sound_plunk',
+              url: ['./audio/dp_frogger_plunk.mp3', './audio/dp_frogger_plunk.ogg'],
+              autoLoad: true,
+              autoPlay: false,
+              onload: function() {
+                console.log('The sound '+this.id+' loaded!');
+              },
+              volume: 50
+            }));
+
+        world.audio.push(soundManager.createSound({
+              id: 'sound_squash',
+              url: ['./audio/dp_frogger_squash.mp3', './audio/dp_frogger_squash.ogg'],
+              autoLoad: true,
+              autoPlay: false,
+              onload: function() {
+                console.log('The sound '+this.id+' loaded!');
+              },
+              volume: 50
+            }));
+
+        world.audio.push(soundManager.createSound({
+              id: 'sound_time',
+              url: ['./audio/dp_frogger_time.mp3', './audio/dp_frogger_time.ogg'],
+              autoLoad: true,
+              autoPlay: false,
+              onload: function() {
+                console.log('The sound '+this.id+' loaded!');
+              },
+              volume: 50
+            }));
+
+      }
+    });
+
+
+
+
+
+
+
+
 
 
 
@@ -42,6 +183,20 @@ World.prototype.grid = {
         5: 435
     }
 };
+
+World.prototype.checkSounds = function() {
+    for (x = 0; x < this.audio.length; x++) {
+        var item = this.audio[x];
+        console.log('this.audio[' + x + '] state = ' + item.playState);
+        console.log(this.audio[x]);
+        if (item.playState === 1) {
+            console.log('sound playing. forcing it to stop.')
+
+        }
+
+    }
+
+}
 
 World.prototype.createListeners = function(mobile, multiplier) {
     console.log(multiplier);
@@ -140,8 +295,12 @@ World.prototype.showMenu = function() {
 
 //  This function is called after player selection.  The actual gameplay starts here.
 World.prototype.gameStart = function(choice) {
+    // this.checkSounds();
 
-    world.sound_start.play();
+
+    soundManager.play('sound_start');
+
+    // world.sound_start.play();
     if (choice === 1) {
         player.sprite = 'images/char-boy.png';
     } else {
@@ -593,7 +752,8 @@ Player.prototype.update = function(dt, time) {
                 }
             }
         } else if (this.animation === 'move') {
-            world.sound_hop.play();
+            // world.sound_hop.play();
+            soundManager.play('sound_hop');
             switch (this.animation_d) {
                 case 'left':
                     if (this.anime_dest < this.x) {
@@ -641,7 +801,8 @@ Player.prototype.update = function(dt, time) {
         }
     }
     if (this.y <= 0 && this.animation != 'jump') {
-        world.sound_time.play();
+        // world.sound_time.play();
+        soundManager.play('sound_jump');
         this.score += 100;
         this.animate = true;
         this.animation = 'jump';
@@ -703,36 +864,36 @@ Player.prototype.loseLife = function() {
     updateScore();
 };
 
-Player.prototype.checkDirection = function( touchX, touchY ) {
-    console.log(this.x + ', ' + this.y);
-    var distanceX = touchX + player.width / 2 - this.x;
-    // var distanceY = Math.abs(this.y + player.height - touchY);
-    var distanceY = touchY + player.height / 2 - this.y;
+// Player.prototype.checkDirection = function( touchX, touchY ) {
+//     console.log(this.x + ', ' + this.y);
+//     var distanceX = touchX + player.width / 2 - this.x;
+//     // var distanceY = Math.abs(this.y + player.height - touchY);
+//     var distanceY = touchY + player.height / 2 - this.y;
 
-    console.log('x distance: ' + distanceX);
-    console.log('y distance: ' + distanceY);
+//     console.log('x distance: ' + distanceX);
+//     console.log('y distance: ' + distanceY);
 
-    if (Math.abs(distanceX) > Math.abs(distanceY)) {
-        console.log('horizontal move');
-        if (distanceX > 0) {
-            console.log('move right.');
-            this.handleInput('right');
-        } else {
-             console.log('move left.');
-            this.handleInput('left');
-        }
-    } else {
-        console.log('vertical move.');
-        if (distanceY > 0) {
-            console.log('move down.');
-            this.handleInput('down');
-        } else {
-             console.log('move up.');
-            this.handleInput('up');
-        }
-    }
+//     if (Math.abs(distanceX) > Math.abs(distanceY)) {
+//         console.log('horizontal move');
+//         if (distanceX > 0) {
+//             console.log('move right.');
+//             this.handleInput('right');
+//         } else {
+//              console.log('move left.');
+//             this.handleInput('left');
+//         }
+//     } else {
+//         console.log('vertical move.');
+//         if (distanceY > 0) {
+//             console.log('move down.');
+//             this.handleInput('down');
+//         } else {
+//              console.log('move up.');
+//             this.handleInput('up');
+//         }
+//     }
 
-}
+// }
 
 // Keypress function.
 function keyPress(event) {
@@ -764,7 +925,7 @@ handleStart = {
         this.tapped = true;
         console.log('Touch start: ' + this.x + ', ' + this.y);
 
-        player.checkDirection(this.x, this.y);
+        // player.checkDirection(this.x, this.y);
 
     }
 };
