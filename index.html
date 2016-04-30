@@ -12,12 +12,8 @@
 
 <body>
 
-
-    <div class="wrapper">
-      <div class="container">
-        <div class="canvas-container" id="container">
             <div class="canvas-overlay" id="overlay">
-<!--             <audio id = "gameSound"></audio> -->
+
               <div class="score" id="scoretotal">SCORE: <span id="score"></span>
                     </div>
                 <div class="topscore" id="toptotal">TOP SCORE: <span id="topscore"></span>
@@ -28,18 +24,26 @@
                     <p><span onclick="world.showMenu();" id="start-touch">Start</span>
                     </p>
                 </div>
+                <div class="controller">
+
+                    <btn class="btn-up" id="up" onclick="player.handleInput('up');">W</btn>
+
+                    <btn class="btn-left" id="left" onclick="player.handleInput('left');">A</btn>
+                    <btn class="btn-right" id="right" onclick="player.handleInput('right');">D</btn>
+
+                    <btn class="btn-down" id="down" onclick="player.handleInput('down');">S</btn>
+
+
+                </div>
+
             </div>
-            <div class="canvas-menu">
-            </div>
-        </div>
-      </div>
-    </div>
+
 
     <script src="js/menu.js"></script>
     <script src="js/resources.js"></script>
-    <script src="js/soundmanager2.js"></script>
+<!--     <script src="js/soundmanager2.js"></script> -->
     <script src="js/app.js"></script>
-    <script src='js/gamecontroller.js'></script>
+<!--     <script src='js/gamecontroller.js'></script> -->
     <script src="js/engine.js"></script>
 
 

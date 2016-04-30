@@ -71,7 +71,9 @@ var GameEngine = function(global) {
     canvas.width = 505;
 
     canvas.height = 606;
-    document.getElementById('container').appendChild(canvas);
+    var body = document.getElementsByTagName("body")[0];
+    body.appendChild(canvas);
+    // document.getElementById('container').appendChild(canvas);
     canvas.setAttribute('id', 'canvas-game');
 
     if (window.matchMedia("(min-width: 1440px)").matches) {
@@ -202,9 +204,9 @@ var GameEngine = function(global) {
         // Calls the gamecontroller
         console.log('Starting controller: ' + engine.mobile);
         if (engine.mobile) {
-            GameController.init();
+            // GameController.init();
             // GameController.renderAreas();
-                console.log(GameController);
+                console.log('showing controller');
         }
         world.createListeners(engine.mobile, engine.multiplier);
 
@@ -288,8 +290,8 @@ var GameEngine = function(global) {
                         collision = true;
                         switch (type) {
                             case 'player':
-                                // world.sound_squash.play();
-                                soundManager.play('sound_squash');
+                                world.sound_squash.play();
+                                // soundManager.play('sound_squash');
                                 if (!player.armor) {
                                     //           console.log('player died.');
                                     if (source.animation != 'death') {
@@ -300,8 +302,8 @@ var GameEngine = function(global) {
                                 }
                                 break;
                             case 'loot':
-                                // world.sound_plunk.play();
-                                soundManager.play('sound_plunk');
+                                world.sound_plunk.play();
+                                // soundManager.play('sound_plunk');
                                 obj.animate = true;
                                 obj.animation = 'death';
                                 //       console.log(obj.name);
@@ -389,7 +391,7 @@ var GameEngine = function(global) {
 // console.log(GameController.triggerRender);
         if (engine.mobile) {
             // console.log('engine triggered render');
-            GameController.renderWrapper();
+            // GameController.renderWrapper();
             // GameController.triggerRender = false;
         }
 

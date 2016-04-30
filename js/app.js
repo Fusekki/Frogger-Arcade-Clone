@@ -14,14 +14,14 @@ var World = function() {
     },
 
         // add audio elements
-    // this.sound_start = new Audio('./audio/dp_frogger_coin.wav');
-    // this.sound_extra = new Audio('./audio/dp_frogger_extra.wav');
-    // this.sound_hop = new Audio('./audio/dp_frogger_hop.wav');
-    // this.sound_plunk = new Audio('./audio/dp_frogger_plunk.wav');
-    // this.sound_squash = new Audio('./audio/dp_frogger_squash.wav');
-    // this.sound_time = new Audio('./audio/dp_frogger_time.wav');
-    // this.sound_start.volume = 0.4;
-    // this.multiplier = 0;
+    this.sound_start = new Audio('./audio/dp_frogger_coin.wav');
+    this.sound_extra = new Audio('./audio/dp_frogger_extra.wav');
+    this.sound_hop = new Audio('./audio/dp_frogger_hop.wav');
+    this.sound_plunk = new Audio('./audio/dp_frogger_plunk.wav');
+    this.sound_squash = new Audio('./audio/dp_frogger_squash.wav');
+    this.sound_time = new Audio('./audio/dp_frogger_time.wav');
+    this.sound_start.volume = 0.4;
+    this.multiplier = 0;
 
     // this.sound_start = new Howl({
     //     urls: ['./audio/dp_frogger_coin.wav', './audio/dp_frogger_coin.mp3', './audio/dp_frogger_coin.ogg'],
@@ -78,83 +78,83 @@ var World = function() {
     //         console.log('finished sound.');
     //     }
     // });
-    this.audio = [],
-    soundManager.setup({
-      url: './swf/',
-      flashVersion: 9, // optional: shiny features (default = 8)
-      // optional: ignore Flash where possible, use 100% HTML5 mode
-      // preferFlash: false,
-      onready: function() {
-        // Ready to use; soundManager.createSound() etc. can now be called.
-        console.log('soundmanager loaded.');
-        world.audio.push(soundManager.createSound({
-              id: 'sound_start',
-              url: ['./audio/dp_frogger_coin.mp3', './audio/dp_frogger_coin.ogg'],
-              autoLoad: true,
-              autoPlay: false,
-              onload: function() {
-                console.log('The sound '+this.id+' loaded!');
-              },
-              volume: 50
-            }));
+    // this.audio = [],
+    // soundManager.setup({
+    //   url: './swf/',
+    //   flashVersion: 9, // optional: shiny features (default = 8)
+    //   // optional: ignore Flash where possible, use 100% HTML5 mode
+    //   // preferFlash: false,
+    //   onready: function() {
+    //     // Ready to use; soundManager.createSound() etc. can now be called.
+    //     console.log('soundmanager loaded.');
+    //     world.audio.push(soundManager.createSound({
+    //           id: 'sound_start',
+    //           url: ['./audio/dp_frogger_coin.mp3', './audio/dp_frogger_coin.ogg'],
+    //           autoLoad: true,
+    //           autoPlay: false,
+    //           onload: function() {
+    //             console.log('The sound '+this.id+' loaded!');
+    //           },
+    //           volume: 50
+    //         }));
 
-        world.audio.push(soundManager.createSound({
-              id: 'sound_extra',
-              url: ['./audio/dp_frogger_extra.mp3', './audio/dp_frogger_extra.ogg'],
-              autoLoad: true,
-              autoPlay: false,
-              onload: function() {
-                console.log('The sound '+this.id+' loaded!');
-              },
-              volume: 50
-            }));
+    //     world.audio.push(soundManager.createSound({
+    //           id: 'sound_extra',
+    //           url: ['./audio/dp_frogger_extra.mp3', './audio/dp_frogger_extra.ogg'],
+    //           autoLoad: true,
+    //           autoPlay: false,
+    //           onload: function() {
+    //             console.log('The sound '+this.id+' loaded!');
+    //           },
+    //           volume: 50
+    //         }));
 
-         world.audio.push(soundManager.createSound({
-              id: 'sound_hop',
-              url: ['./audio/dp_frogger_hop.mp3', './audio/dp_frogger_hop.ogg'],
-              autoLoad: true,
-              autoPlay: false,
-              onload: function() {
-                console.log('The sound '+this.id+' loaded!');
-              },
-              volume: 50
-            }));
+    //      world.audio.push(soundManager.createSound({
+    //           id: 'sound_hop',
+    //           url: ['./audio/dp_frogger_hop.mp3', './audio/dp_frogger_hop.ogg'],
+    //           autoLoad: true,
+    //           autoPlay: false,
+    //           onload: function() {
+    //             console.log('The sound '+this.id+' loaded!');
+    //           },
+    //           volume: 50
+    //         }));
 
-        world.audio.push(soundManager.createSound({
-              id: 'sound_plunk',
-              url: ['./audio/dp_frogger_plunk.mp3', './audio/dp_frogger_plunk.ogg'],
-              autoLoad: true,
-              autoPlay: false,
-              onload: function() {
-                console.log('The sound '+this.id+' loaded!');
-              },
-              volume: 50
-            }));
+    //     world.audio.push(soundManager.createSound({
+    //           id: 'sound_plunk',
+    //           url: ['./audio/dp_frogger_plunk.mp3', './audio/dp_frogger_plunk.ogg'],
+    //           autoLoad: true,
+    //           autoPlay: false,
+    //           onload: function() {
+    //             console.log('The sound '+this.id+' loaded!');
+    //           },
+    //           volume: 50
+    //         }));
 
-        world.audio.push(soundManager.createSound({
-              id: 'sound_squash',
-              url: ['./audio/dp_frogger_squash.mp3', './audio/dp_frogger_squash.ogg'],
-              autoLoad: true,
-              autoPlay: false,
-              onload: function() {
-                console.log('The sound '+this.id+' loaded!');
-              },
-              volume: 50
-            }));
+    //     world.audio.push(soundManager.createSound({
+    //           id: 'sound_squash',
+    //           url: ['./audio/dp_frogger_squash.mp3', './audio/dp_frogger_squash.ogg'],
+    //           autoLoad: true,
+    //           autoPlay: false,
+    //           onload: function() {
+    //             console.log('The sound '+this.id+' loaded!');
+    //           },
+    //           volume: 50
+    //         }));
 
-        world.audio.push(soundManager.createSound({
-              id: 'sound_time',
-              url: ['./audio/dp_frogger_time.mp3', './audio/dp_frogger_time.ogg'],
-              autoLoad: true,
-              autoPlay: false,
-              onload: function() {
-                console.log('The sound '+this.id+' loaded!');
-              },
-              volume: 50
-            }));
+    //     world.audio.push(soundManager.createSound({
+    //           id: 'sound_time',
+    //           url: ['./audio/dp_frogger_time.mp3', './audio/dp_frogger_time.ogg'],
+    //           autoLoad: true,
+    //           autoPlay: false,
+    //           onload: function() {
+    //             console.log('The sound '+this.id+' loaded!');
+    //           },
+    //           volume: 50
+    //         }));
 
-      }
-    });
+    //   }
+    // });
 
 
 
@@ -254,6 +254,7 @@ World.prototype.createListeners = function(mobile, multiplier) {
             }, false);
             this.canvasElement.addEventListener('touchend', function(e) {
                 // as above
+                console.log('this');
                 e.preventDefault();
             }, false);
         };
@@ -298,9 +299,9 @@ World.prototype.gameStart = function(choice) {
     // this.checkSounds();
 
 
-    soundManager.play('sound_start');
+    // soundManager.play('sound_start');
 
-    // world.sound_start.play();
+    world.sound_start.play();
     if (choice === 1) {
         player.sprite = 'images/char-boy.png';
     } else {
@@ -330,20 +331,20 @@ World.prototype.gameStart = function(choice) {
     // listen for touches
     // window.addEventListener("touchstart", handleStart, false);
 
-    this.canvasElement.addEventListener('touchstart', function(e) {
-        e.preventDefault();
-        // the event object has an array
-        // named touches; we just want
-        // the first touch
-        handleStart.set(e.touches[0]);
-    }, false);
+    // document.addEventListener('touchstart', function(e) {
+    //     e.preventDefault();
+    //     // the event object has an array
+    //     // named touches; we just want
+    //     // the first touch
+    //     handleStart.set(e.touches[0]);
+    // }, false);
 
-    this.canvasElement.addEventListener('touchend', function(e) {
-        // as above
-        e.preventDefault();
-        // console.log(e.changedTouches[0]);
-        identifyTouchLoc.set(e.changedTouches[0]);
-    }, false);
+    // document.addEventListener('touchend', function(e) {
+    //     // as above
+    //     e.preventDefault();
+    //     // console.log(e.changedTouches[0]);
+    //     identifyTouchLoc.set(e.changedTouches[0]);
+    // }, false);
 
 
 
@@ -752,8 +753,8 @@ Player.prototype.update = function(dt, time) {
                 }
             }
         } else if (this.animation === 'move') {
-            // world.sound_hop.play();
-            soundManager.play('sound_hop');
+            world.sound_hop.play();
+            // soundManager.play('sound_hop');
             switch (this.animation_d) {
                 case 'left':
                     if (this.anime_dest < this.x) {
@@ -801,8 +802,8 @@ Player.prototype.update = function(dt, time) {
         }
     }
     if (this.y <= 0 && this.animation != 'jump') {
-        // world.sound_time.play();
-        soundManager.play('sound_jump');
+        world.sound_time.play();
+        // soundManager.play('sound_jump');
         this.score += 100;
         this.animate = true;
         this.animation = 'jump';
@@ -920,10 +921,35 @@ handleStart = {
         // console.log(ctx.canvas.offsetTop);
         // console.log(world.offsetLeft);
 
+        var up = document.getElementById("up");
+        var left = document.getElementById("left");
+        var down = document.getElementById("down");
+        var right = document.getElementById("right");
+
         this.x = (data.pageX  - world.offsetLeft);
         this.y = (data.pageY  - world.offsetTop);
         this.tapped = true;
         console.log('Touch start: ' + this.x + ', ' + this.y);
+
+        console.log(data.target);
+
+        if (data.target === up) {
+            up.setActive();
+            player.handleInput('up');
+
+
+        } else if (data.target === left) {
+            player.handleInput('left');
+
+        } else if (data.target === right) {
+            player.handleInput('right');
+
+        } else if (data.target === down) {
+            player.handleInput('down');
+
+        }
+
+
 
         // player.checkDirection(this.x, this.y);
 

@@ -41,8 +41,9 @@ Menu.prototype.init = function() {
     canvas.style.position = "absolute";
     canvas.style.border = "1px solid";
 
-    // var body = document.getElementsByTagName("body")[0];
-    document.getElementById('container').appendChild(canvas);
+    var body = document.getElementsByTagName("body")[0];
+    body.appendChild(canvas);
+    // document.getElementById('container').appendChild(canvas);
     this.show = true;
 
     // Get the dimensions of the viewport
@@ -270,8 +271,9 @@ Menu.prototype.close = function() {
         }
     }, false);
 
-    var parent = document.getElementById("container");
+    var parent = document.getElementsByTagName("body")[0];
     parent.removeChild(canvas);
+
     this.menuctx = null;
     world.gameStart(this.selectedItem);
 };
