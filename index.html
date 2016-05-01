@@ -13,6 +13,33 @@
 <body>
 
             <div class="canvas-overlay" id="overlay">
+            <audio id="audio-start">
+                <source src='./audio/dp_frogger_coin.mp3' type='audio/mpeg; codecs="mp3"'>
+                <source src='./audio/dp_frogger_coin.ogg' type='audio/ogg; codecs="vorbis"'>
+
+            </audio>
+            <audio id="audio-extra" oncanplaythrough="world.audioReady">
+                <source src='./audio/dp_frogger_extra.mp3' type='audio/mpeg; codecs="mp3"'>
+                <source src='./audio/dp_frogger_extra.ogg' type='audio/ogg; codecs="vorbis"'>
+
+            </audio>
+            <audio id="audio-hop" oncanplaythrough="world.audioReady">
+                <source src='./audio/dp_frogger_hop.mp3' type='audio/mpeg; codecs="mp3"'>
+                <source src='./audio/dp_frogger_hop.ogg' type='audio/ogg; codecs="vorbis"'>
+
+            </audio>
+            <audio id="audio-plunk" oncanplaythrough="world.audioReady">
+                <source src='./audio/dp_frogger_plunk.mp3' type='audio/mpeg; codecs="mp3"'>
+                <source src='./audio/dp_frogger_plunk.ogg' type='audio/ogg; codecs="vorbis"'>
+            </audio>
+            <audio id="audio-squash" oncanplaythrough="world.audioReady">
+                <source src='./audio/dp_frogger_squash.mp3' type='audio/mpeg; codecs="mp3"'>
+                <source src='./audio/dp_frogger_squash.ogg' type='audio/ogg; codecs="vorbis"'>
+            </audio>
+            <audio id="audio-time" oncanplaythrough="world.audioReady">
+                <source src='./audio/dp_frogger_time.mp3' type='audio/mpeg; codecs="mp3"'>
+                <source src='./audio/dp_frogger_time.ogg' type='audio/ogg; codecs="vorbis"'>
+            </audio>
 
               <div class="score" id="scoretotal">SCORE: <span id="score"></span>
                     </div>

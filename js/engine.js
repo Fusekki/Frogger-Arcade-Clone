@@ -90,10 +90,6 @@ var GameEngine = function(global) {
 
     // this.scale = window.innerWidth / window.innerHeight;
 
-        viewport = {
-            width: window.innerWidth,
-            height: window.innerHeight
-        };
 
     // if (canvas.height / canvas.width > viewport.height / viewport.width) {
     //       newGameHeight = viewport.height;
@@ -161,29 +157,6 @@ var GameEngine = function(global) {
 
     };
 
-    this.resizeGame = function() {
-
-        console.log('resize game called');
-
-        this.multiplier = Math.min((viewport.height / canvas.height), (viewport.width / canvas.width));
-        this.actualCanvasWidth = canvas.width * this.multiplier;
-        this.actualCanvasHeight = canvas.height * this.multiplier;
-        console.log(this.actualCanvasHeight);
-        console.log(this.multiplier);
-        // /* portrait */
-        // @media screen and (orientation:portrait) {
-        //     this.actualCanvasHeight = canvas.height;
-        // }
-        //  landscape
-        // @media screen and (orientation:landscape) {
-        //     /* landscape-specific styles */
-        //     this.actualCanvasWidth = canvas.width;
-        // }
-        // Resize game
-        canvas.style.width = this.actualCanvasWidth + "px";
-        canvas.style.height = this.actualCanvasHeight + "px";
-
-    }
 
 
     /* This function does some initial setup that should only occur once,
@@ -197,8 +170,7 @@ var GameEngine = function(global) {
 
         console.log(engine.mobile);
         console.log(engine.multiplier);
-        window.addEventListener("resize", engine.resizeGame);
-        console.log('going to call resize');
+        window.addEventListener("resize", engine.resizeGame, false);
         engine.resizeGame();
         world.alignGameOver(engine.multiplier);
         // Calls the gamecontroller
@@ -212,6 +184,31 @@ var GameEngine = function(global) {
 
         engine.main();
     };
+
+    this.resizeGame = function(e) {
+        viewport = {
+            width: window.innerWidth,
+            height: window.innerHeight
+        };
+
+        this.multiplier = Math.min((viewport.height / canvas.height), (viewport.width / canvas.width));
+        this.actualCanvasWidth = canvas.width * this.multiplier;
+
+        this.actualCanvasHeight = canvas.height * this.multiplier;
+        world.multiplier = this.multiplier;
+        // /* portrait */
+        // @media screen and (orientation:portrait) {
+        //     this.actualCanvasHeight = canvas.height;
+        // }
+        //  landscape
+        // @media screen and (orientation:landscape) {
+        //     /* landscape-specific styles */
+        //     this.actualCanvasWidth = canvas.width;
+        // }
+        // Resize game
+        canvas.style.width = this.actualCanvasWidth + "px";
+        canvas.style.height = this.actualCanvasHeight + "px";
+    }
 
     // Game over
     this.gameOver = function(action) {

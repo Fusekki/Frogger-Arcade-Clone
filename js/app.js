@@ -13,15 +13,22 @@ var World = function() {
         removeidx: null
     },
 
-        // add audio elements
-    this.sound_start = new Audio('./audio/dp_frogger_coin.wav');
-    this.sound_extra = new Audio('./audio/dp_frogger_extra.wav');
-    this.sound_hop = new Audio('./audio/dp_frogger_hop.wav');
-    this.sound_plunk = new Audio('./audio/dp_frogger_plunk.wav');
-    this.sound_squash = new Audio('./audio/dp_frogger_squash.wav');
-    this.sound_time = new Audio('./audio/dp_frogger_time.wav');
-    this.sound_start.volume = 0.4;
+    // add audio elements
+    this.sound_start = document.getElementById('audio-start');
+    this.sound_extra = document.getElementById('audio-exta');
+    this.sound_hop = document.getElementById('audio-hop');
+    this.sound_plunk = document.getElementById('audio-plunk');
+    this.sound_squash = document.getElementById('audio-squash');
+    // this.sound_time = new Audio('./audio/dp_frogger_time.wav');
+    // this.sound_start = new Audio('./audio/dp_frogger_coin.wav');
+    // this.sound_extra = new Audio('./audio/dp_frogger_extra.wav');
+    // this.sound_hop = new Audio('./audio/dp_frogger_hop.wav');
+    // this.sound_plunk = new Audio('./audio/dp_frogger_plunk.wav');
+    // this.sound_squash = new Audio('./audio/dp_frogger_squash.wav');
+    // this.sound_time = new Audio('./audio/dp_frogger_time.wav');
+    // this.sound_start.volume = 0.4;
     this.multiplier = 0;
+    this.audioEnabled = true;
 
     // this.sound_start = new Howl({
     //     urls: ['./audio/dp_frogger_coin.wav', './audio/dp_frogger_coin.mp3', './audio/dp_frogger_coin.ogg'],
@@ -236,6 +243,9 @@ World.prototype.createListeners = function(mobile, multiplier) {
     console.log(this.isMobile);
 
         if (mobile) {
+            if (!this.audioEnabled) {
+                this.audioEnabled = false;
+            }
 
             this.menuElement.addEventListener('touchstart', function(e) {
                 e.preventDefault();
@@ -264,6 +274,9 @@ World.prototype.createListeners = function(mobile, multiplier) {
 // When invoked, shows the player menu.
 World.prototype.showMenu = function() {
     if (this.mobile) {
+        if (!this.audioEnabled) {
+            this.audioEnabled = true;
+        }
         this.menuElement.removeEventListener('touchstart', function(e) {
             e.preventDefault();
             // the event object has an array
@@ -276,6 +289,16 @@ World.prototype.showMenu = function() {
                 // as above
                 e.preventDefault();
             }, false);
+    }
+
+    // Trigger the sounds to load. This is a hack for the autoplay limitation on mobile devices
+    for (var x = 0; x < 6; x++) {
+        var item = document.getElementsByTagName('audio')[x];
+        console.log(item);
+        item.oncanplaythrough=function(){ console.log('can play audio here.');}
+        item.load();
+
+
     }
 
 
@@ -358,6 +381,12 @@ World.prototype.gameStart = function(choice) {
 
     // This flags the game for start when the main method is called.
     world.gameactive = true;
+};
+
+World.prototype.audioReady = function(e) {
+    console.log(e);
+    console.log('audio ready for play through');
+
 };
 
 // Game ends function.
