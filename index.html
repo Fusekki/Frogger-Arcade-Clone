@@ -13,7 +13,7 @@
 <body>
 
             <div class="canvas-overlay" id="overlay">
-            <audio id="audio-start">
+            <audio class="a-start" id="audio-start">
                 <source src='./audio/dp_frogger_coin.mp3' type='audio/mpeg; codecs="mp3"'>
                 <source src='./audio/dp_frogger_coin.ogg' type='audio/ogg; codecs="vorbis"'>
 
@@ -48,7 +48,7 @@
                 <div class="lives" id="livestotal">LIVES: <span id="lives"></span>
                     </div>
                 <div class="game-over" id="game-over">GAME OVER
-                    <p><span onclick="world.showMenu();" id="start-touch">Start</span>
+                    <p><span id="start-touch">Start</span>
                     </p>
                 </div>
                 <div class="controller">
@@ -65,7 +65,7 @@
 
             </div>
 
-
+<!--     <script src="js/simple-audio.js"></script> -->
     <script src="js/menu.js"></script>
     <script src="js/resources.js"></script>
 <!--     <script src="js/soundmanager2.js"></script> -->

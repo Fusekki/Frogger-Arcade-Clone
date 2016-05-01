@@ -240,6 +240,7 @@ World.prototype.createListeners = function(mobile, multiplier) {
     this.offsetLeft = ctx.canvas.offsetLeft;
     this.offsetTop = ctx.canvas.offsetTop;
     this.menuElement = document.getElementById('start-touch');
+    this.menuElement.addEventListener('click', this.showMenu, false);
     console.log(this.isMobile);
 
         if (mobile) {
@@ -294,12 +295,11 @@ World.prototype.showMenu = function() {
     // Trigger the sounds to load. This is a hack for the autoplay limitation on mobile devices
     for (var x = 0; x < 6; x++) {
         var item = document.getElementsByTagName('audio')[x];
-        console.log(item);
+        // console.log(item);
         item.oncanplaythrough=function(){ console.log('can play audio here.');}
         item.load();
-
-
     }
+
 
 
 
@@ -782,11 +782,12 @@ Player.prototype.update = function(dt, time) {
                 }
             }
         } else if (this.animation === 'move') {
-            world.sound_hop.play();
+            // world.sound_hop.play();
             // soundManager.play('sound_hop');
             switch (this.animation_d) {
                 case 'left':
                     if (this.anime_dest < this.x) {
+                        world.sound_hop.play();
                         this.x -= (dt * 800);
                     } else {
                         this.x = this.anime_dest;
@@ -797,6 +798,7 @@ Player.prototype.update = function(dt, time) {
                     break;
                 case 'right':
                     if (this.anime_dest > this.x) {
+                        world.sound_hop.play();
                         this.x += (dt * 800);
                     } else {
                         this.x = this.anime_dest;
@@ -807,6 +809,7 @@ Player.prototype.update = function(dt, time) {
                     break;
                 case 'up':
                     if (this.anime_dest < this.y) {
+                        world.sound_hop.play();
                         this.y -= (dt * 800);
                     } else {
                         this.y = this.anime_dest;
@@ -817,6 +820,7 @@ Player.prototype.update = function(dt, time) {
                     break;
                 case 'down':
                     if (this.anime_dest > this.y) {
+                        world.sound_hop.play();
                         this.y += (dt * 800);
                     } else {
                         this.y = this.anime_dest;
