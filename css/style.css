@@ -190,7 +190,6 @@ canvas {
 @media only screen
   and (min-device-width: 320px)
   and (max-device-width: 568px)
-  and (-webkit-min-device-pixel-ratio: 2)
   and (orientation: landscape) {
    /* -31 top +30 left*/
 
@@ -246,7 +245,7 @@ canvas {
     }
     .btn-left {
       top: 78vh;
-      left: 28vw;
+      left: 29vw;
     }
 
     .btn-down {
@@ -256,7 +255,7 @@ canvas {
 
     .btn-right {
       top: 78vh;
-      left: 58vw;
+      left: 57vw;
     }
 
 }
@@ -265,7 +264,6 @@ canvas {
 @media only screen
   and (min-device-width: 375px)
   and (max-device-width: 667px)
-  and (-webkit-min-device-pixel-ratio: 2)
   and (orientation: landscape) {
 
     .controller btn {
@@ -299,11 +297,40 @@ canvas {
     }
 
 }
+
+/* ----------- iPhone 6 Plus ----------- */
+
+/*iPhone 6 Plus Portrait*/
+@media only screen
+  and (min-device-width: 414px)
+  and (max-device-width: 736px)
+  and (orientation: portrait) {
+
+    .btn-up {
+      top: 72vh;
+      left: 43vw;
+    }
+    .btn-left {
+      top: 78vh;
+      left: 30vw;
+    }
+
+    .btn-down {
+      top: 84vh;
+      left: 43vw;
+    }
+
+    .btn-right {
+      top: 78vh;
+      left: 56vw;
+    }
+
+}
+
 /*iPhone 6 Plus Landscape*/
 @media only screen
   and (min-device-width: 414px)
   and (max-device-width: 736px)
-  and (-webkit-min-device-pixel-ratio: 2)
   and (orientation: landscape) {
 
     .controller btn {
@@ -322,12 +349,12 @@ canvas {
     }
     .btn-left {
       top: 47vh;
-      left: 64vw;
+      left: 65vw;
 
     }
     .btn-right {
       top: 47vh;
-      left: 80vw;
+      left: 79vw;
 
     }
     .btn-down {
@@ -338,8 +365,13 @@ canvas {
 
 }
 
+/* Portrait and Landscape */
+@media screen and (device-width: 360px) and (-webkit-device-pixel-ratio: 3) {}
+
+/* ----------- iPad ----------- */
+
 @media only screen and
-(min-device-width: 481px)
+(min-device-width: 768px)
 and (max-device-width: 1024px)
 and (orientation:portrait) {
   /* For portrait only */
@@ -365,7 +397,7 @@ and (orientation:portrait) {
 }
 
 @media only screen and
-(min-device-width: 481px)
+(min-device-width: 768px)
 and (max-device-width: 1024px)
 and (orientation:landscape) {
   /* For lanscape only */
@@ -399,6 +431,8 @@ and (orientation:landscape) {
     }
 
 }
+
+/* ----------- Desktop ----------- */
 
 @media screen and (min-width: 1220px) {
     body {

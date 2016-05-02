@@ -30,42 +30,6 @@ var GameEngine = function(global) {
         this.actualCanvasWidth = null;
         this.actualCanvasHeight = null;
 
-
-    // if (window.matchMedia("(max-width: 320px)").matches) {
-    //   // 320 x 568
-    //   console.log('iphone 5P detected');
-    // } else if (window.matchMedia("(max-width: 375px)").matches) {
-    //     // 375 x 667
-    //     console.log('iphone 6P detected');
-
-    // } else if (window.matchMedia("(max-width: 414px)").matches) {
-    //     // 414 x 736
-    //     console.log('iphone 6+P detected');
-
-    // } else if (window.matchMedia("(max-width: 568px)").matches) {
-    //   // 568 x 320
-    //   console.log('iphone 5L detected');
-    // }  else if (window.matchMedia("(max-width: 667px)").matches) {
-    //     // 667 x 375
-    //     console.log('iphone 6L detected');
-
-    // } else if (window.matchMedia("(max-width: 736px)").matches) {
-    //     // 736 x 414
-    //     console.log('iphone 6+L detected');
-
-    // } else if (window.matchMedia("(max-width: 768px)").matches) {
-    //     // 758 x 1024
-    //     console.log('iPad P detected');
-
-    // } else if (window.matchMedia("(max-width: 1024px)").matches) {
-    //     // 1024 x 768
-    //     console.log('iPad L detected');
-
-    // } else if (window.matchMedia("(min-width: 1440px)").matches) {
-    //     // 1440 x ??
-    //     console.log('Large Screen detected.');
-
-    // }
     // Setting hardware scaling
     canvas.width = 505;
 
@@ -83,42 +47,7 @@ var GameEngine = function(global) {
         this.mobile = true;
     }
      console.log(this.mobile);
-    // this.offsetLeft = canvas.offsetLeft;
-    // this.offsetTop = canvas.offsetTop;
 
-
-    // this.scale = window.innerWidth / window.innerHeight;
-
-
-    // if (canvas.height / canvas.width > viewport.height / viewport.width) {
-    //       newGameHeight = viewport.height;
-    //       newGameWidth = newGameHeight * canvas.width / canvas.height;
-    //       this.scale = newGameWidth / newGameHeight;
-
-    // } else {
-    //   newGameWidth = viewport.width;
-    //   newGameHeight = newGameWidth * canvas.height / canvas.width;
-    //     this.scale = newGameWidth / newGameHeight;
-    // }
-
-    // Resize game
-    // canvas.style.width = newGameWidth + "px";
-    // canvas.style.height = newGameHeight + "px";
-
-    // this.multiplier = Math.min((viewport.height / canvas.height), (viewport.width / canvas.width));
-    // var actualCanvasWidth = canvas.width * this.multiplier;
-    // var actualCanvasHeight = canvas.height * this.multiplier;
-
-
-
-    // Resize game
-    // canvas.style.width = actualCanvasWidth + "px";
-    // canvas.style.height = actualCanvasHeight + "px";
-
-
-
-
-    // doc.body.appendChild(canvas);
     this.paused = false;
 
     /* This function serves as the kickoff point for the game loop itself
@@ -174,8 +103,6 @@ var GameEngine = function(global) {
         // Calls the gamecontroller
         console.log('Starting controller: ' + engine.mobile);
         if (engine.mobile) {
-            // GameController.init();
-            // GameController.renderAreas();
                 console.log('showing controller');
         }
         world.createListeners(engine.mobile, engine.multiplier);
@@ -184,12 +111,12 @@ var GameEngine = function(global) {
     };
 
     this.resizeGame = function(e) {
+        console.log('resize called');
 
-        if (window.matchMedia("(min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)").matches) {
-            // 758 x 1024
+        if (window.matchMedia("(min-device-width: 768px) and (max-device-width: 1024px) and (orientation:portrait)").matches) {
             console.log('iPad Portrait');
             canvas.style.top = "-40px";
-        } else if (window.matchMedia("(min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)").matches) {
+        } else if (window.matchMedia("(min-device-width: 768px) and (max-device-width: 1024px) and (orientation:landscape)").matches) {
             console.log('iPad Landscape');
             canvas.style.top = "0";
         }
@@ -204,15 +131,6 @@ var GameEngine = function(global) {
 
         this.actualCanvasHeight = canvas.height * this.multiplier;
         world.multiplier = this.multiplier;
-        // /* portrait */
-        // @media screen and (orientation:portrait) {
-        //     this.actualCanvasHeight = canvas.height;
-        // }
-        //  landscape
-        // @media screen and (orientation:landscape) {
-        //     /* landscape-specific styles */
-        //     this.actualCanvasWidth = canvas.width;
-        // }
         // Resize game
         canvas.style.width = this.actualCanvasWidth + "px";
         canvas.style.height = this.actualCanvasHeight + "px";
