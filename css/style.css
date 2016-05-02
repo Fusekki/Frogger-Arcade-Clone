@@ -400,9 +400,12 @@ and (orientation:landscape) {
 
 }
 
-@media screen and (min-width: 1440px) {
+@media screen and (min-width: 1220px) {
     body {
 /*        text-align: center;*/
+    }
+        .controller  {
+          display: none;
     }
 
 }
