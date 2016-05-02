@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Frogger Arcade Clone</title>
-    <link rel="stylesheet" href="css/kenney-icons.css">
+<!--     <link rel="stylesheet" href="css/kenney-icons.css"> -->
     <link rel="stylesheet" href="css/style.css">
+
 
 </head>
 
@@ -40,28 +41,31 @@
                 <source src='./audio/dp_frogger_time.mp3' type='audio/mpeg; codecs="mp3"'>
                 <source src='./audio/dp_frogger_time.ogg' type='audio/ogg; codecs="vorbis"'>
             </audio>
-
-              <div class="score" id="scoretotal">SCORE: <span id="score"></span>
-                    </div>
+            <div id="score-board">
+                <span class="score" id="scoretotal">SCORE: <span id="score"></span>
+                    </span>
                 <div class="topscore" id="toptotal">TOP SCORE: <span id="topscore"></span>
                     </div>
                 <div class="lives" id="livestotal">LIVES: <span id="lives"></span>
-                    </div>
+            </div>
+
+            </div>
                 <div class="game-over" id="game-over">GAME OVER
                     <p><span id="start-touch">Start</span>
                     </p>
                 </div>
-                <div class="controller">
 
-                    <btn class="btn-up" id="up" onclick="player.handleInput('up');">W</btn>
+            <div class="controller">
 
-                    <btn class="btn-left" id="left" onclick="player.handleInput('left');">A</btn>
-                    <btn class="btn-right" id="right" onclick="player.handleInput('right');">D</btn>
+                <btn class="btn-up" id="up" onclick="player.handleInput('up');">W</btn>
 
-                    <btn class="btn-down" id="down" onclick="player.handleInput('down');">S</btn>
+                <btn class="btn-left" id="left" onclick="player.handleInput('left');">A</btn>
+                <btn class="btn-right" id="right" onclick="player.handleInput('right');">D</btn>
+
+                <btn class="btn-down" id="down" onclick="player.handleInput('down');">S</btn>
 
 
-                </div>
+            </div>
 
             </div>
 
@@ -72,6 +76,7 @@
     <script src="js/app.js"></script>
 <!--     <script src='js/gamecontroller.js'></script> -->
     <script src="js/engine.js"></script>
+        <link href='https://fonts.googleapis.com/css?family=Orbitron:400,900' rel='stylesheet' type='text/css'>
 
 
 

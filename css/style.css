@@ -120,6 +120,12 @@ canvas {
   background: #330000;
 }
 
+#score-board1 {
+    display: table;
+    width: 100%; /*Optional*/
+    table-layout: fixed; /*Optional*/
+
+}
 
 .score, .lives, .topscore {
     position: absolute;
@@ -133,7 +139,7 @@ canvas {
 
 .game-over {
     position: absolute;
-    top: 200px;
+/*    top: 200px;*/
 /*    color: #ff7f00;
     font-family: Helvetica, sans-serif;*/
     font-size: 5vh;
@@ -141,11 +147,11 @@ canvas {
     display: none;
     text-align: center;
     z-index: 2;
-
-  color: #fff;
-  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #66CC00, 0 0 30px #66CC00, 0 0 40px #66CC00, 0 0 50px #66CC00, 0 0 75px #66CC00;
-/*  letter-spacing: 5px;*/
-  font: 'MisoRegular';
+    font-weight: 700;
+    color: black;
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #66CC00, 0 0 30px #66CC00, 0 0 40px #66CC00, 0 0 50px #66CC00, 0 0 75px #66CC00;
+  /*  letter-spacing: 5px;*/
+    font-family: 'Orbitron', sans-serif;
 }
 
 @-webkit-keyframes neon1 {
@@ -218,17 +224,15 @@ canvas {
 
     }
 
+/*    .game-over {
+      top: 40vh;
+      left: 15vw;
+
+    }*/
+
 }
 
 /* ----------- iPhone 6 ----------- */
-
-/* Portrait and Landscape */
-@media only screen
-  and (min-device-width: 375px)
-  and (max-device-width: 667px)
-  and (-webkit-min-device-pixel-ratio: 2) {
-
-}
 
 /* Portrait */
 @media only screen
@@ -295,7 +299,7 @@ canvas {
     }
 
 }
-
+/*iPhone 6 Plus Landscape*/
 @media only screen
   and (min-device-width: 414px)
   and (max-device-width: 736px)
@@ -329,6 +333,68 @@ canvas {
     .btn-down {
       top: 56vh;
       left: 72vw;
+
+    }
+
+}
+
+@media only screen and
+(min-device-width: 481px)
+and (max-device-width: 1024px)
+and (orientation:portrait) {
+  /* For portrait only */
+      .btn-up {
+      top: 84vh;
+      left: 45vw;
+    }
+    .btn-left {
+      top: 88vh;
+      left: 35vw;
+    }
+
+    .btn-down {
+      top: 92vh;
+      left: 45vw;
+    }
+
+    .btn-right {
+      top: 88vh;
+      left: 55vw;
+    }
+
+}
+
+@media only screen and
+(min-device-width: 481px)
+and (max-device-width: 1024px)
+and (orientation:landscape) {
+  /* For lanscape only */
+    .controller btn {
+      padding: 12px 15px 12px 15px;
+      font-size: 4vw;
+      width: 4vw;
+      height: 6vh;
+      line-height: 6vh;
+    }
+    .btn-up {
+      top: 38vh;
+      left: 76vw;
+
+
+    }
+    .btn-left {
+      top: 46vh;
+      left: 70vw;
+
+    }
+    .btn-right {
+      top: 46vh;
+      left: 82vw;
+
+    }
+    .btn-down {
+      top: 54vh;
+      left: 76vw;
 
     }
 

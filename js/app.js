@@ -19,6 +19,7 @@ var World = function() {
     this.sound_hop = document.getElementById('audio-hop');
     this.sound_plunk = document.getElementById('audio-plunk');
     this.sound_squash = document.getElementById('audio-squash');
+    this.sound_time = document.getElementById('audio-squash');
     // this.sound_time = new Audio('./audio/dp_frogger_time.wav');
     // this.sound_start = new Audio('./audio/dp_frogger_coin.wav');
     // this.sound_extra = new Audio('./audio/dp_frogger_extra.wav');
@@ -29,150 +30,6 @@ var World = function() {
     // this.sound_start.volume = 0.4;
     this.multiplier = 0;
     this.audioEnabled = true;
-
-    // this.sound_start = new Howl({
-    //     urls: ['./audio/dp_frogger_coin.wav', './audio/dp_frogger_coin.mp3', './audio/dp_frogger_coin.ogg'],
-    //     volume: 0.5,
-    //     autoplay: false,
-    //     loop: false,
-
-    //     onend: function() {
-    //         console.log('finished sound.');
-    //     }
-    // });
-    //     this.sound_extra = new Howl({
-    //     urls: ['./audio/dp_frogger_extra.wav', './audio/dp_frogger_extra.mp3', './audio/dp_frogger_extra.ogg'],
-    //     volume: 0.5,
-    //             autoplay: false,
-    //     loop: false,
-    //             onend: function() {
-    //         console.log('finished sound.');
-    //     }
-    // });
-    //     this.sound_hop = new Howl({
-    //     urls: ['./audio/dp_frogger_hop.wav', './audio/dp_frogger_hop.mp3', './audio/dp_frogger_hop.ogg'],
-    //     volume: 0.5,
-    //             autoplay: false,
-    //     loop: false,
-    //             onend: function() {
-    //         console.log('finished sound.');
-    //     }
-    // });
-    //     this.sound_plunk = new Howl({
-    //     urls: ['./audio/dp_frogger_plunk.wav', './audio/dp_frogger_plunk.mp3', './audio/dp_frogger_plunk.ogg'],
-    //     volume: 0.5,
-    //             autoplay: false,
-    //     loop: false,
-    //             onend: function() {
-    //         console.log('finished sound.');
-    //     }
-    // });
-    //     this.sound_squash = new Howl({
-    //     urls: ['./audio/dp_frogger_squash.wav', './audio/dp_frogger_squash.mp3', './audio/dp_frogger_squash.ogg'],
-    //     volume: 0.5,
-    //             autoplay: false,
-    //     loop: false,
-    //             onend: function() {
-    //         console.log('finished sound.');
-    //     }
-    // });
-    //     this.sound_time = new Howl({
-    //     urls: ['./audio/dp_frogger_time.wav', './audio/dp_frogger_time.mp3', './audio/dp_frogger_time.wav'],
-    //     volume: 0.5,
-    //             autoplay: false,
-    //     loop: false,
-    //             onend: function() {
-    //         console.log('finished sound.');
-    //     }
-    // });
-    // this.audio = [],
-    // soundManager.setup({
-    //   url: './swf/',
-    //   flashVersion: 9, // optional: shiny features (default = 8)
-    //   // optional: ignore Flash where possible, use 100% HTML5 mode
-    //   // preferFlash: false,
-    //   onready: function() {
-    //     // Ready to use; soundManager.createSound() etc. can now be called.
-    //     console.log('soundmanager loaded.');
-    //     world.audio.push(soundManager.createSound({
-    //           id: 'sound_start',
-    //           url: ['./audio/dp_frogger_coin.mp3', './audio/dp_frogger_coin.ogg'],
-    //           autoLoad: true,
-    //           autoPlay: false,
-    //           onload: function() {
-    //             console.log('The sound '+this.id+' loaded!');
-    //           },
-    //           volume: 50
-    //         }));
-
-    //     world.audio.push(soundManager.createSound({
-    //           id: 'sound_extra',
-    //           url: ['./audio/dp_frogger_extra.mp3', './audio/dp_frogger_extra.ogg'],
-    //           autoLoad: true,
-    //           autoPlay: false,
-    //           onload: function() {
-    //             console.log('The sound '+this.id+' loaded!');
-    //           },
-    //           volume: 50
-    //         }));
-
-    //      world.audio.push(soundManager.createSound({
-    //           id: 'sound_hop',
-    //           url: ['./audio/dp_frogger_hop.mp3', './audio/dp_frogger_hop.ogg'],
-    //           autoLoad: true,
-    //           autoPlay: false,
-    //           onload: function() {
-    //             console.log('The sound '+this.id+' loaded!');
-    //           },
-    //           volume: 50
-    //         }));
-
-    //     world.audio.push(soundManager.createSound({
-    //           id: 'sound_plunk',
-    //           url: ['./audio/dp_frogger_plunk.mp3', './audio/dp_frogger_plunk.ogg'],
-    //           autoLoad: true,
-    //           autoPlay: false,
-    //           onload: function() {
-    //             console.log('The sound '+this.id+' loaded!');
-    //           },
-    //           volume: 50
-    //         }));
-
-    //     world.audio.push(soundManager.createSound({
-    //           id: 'sound_squash',
-    //           url: ['./audio/dp_frogger_squash.mp3', './audio/dp_frogger_squash.ogg'],
-    //           autoLoad: true,
-    //           autoPlay: false,
-    //           onload: function() {
-    //             console.log('The sound '+this.id+' loaded!');
-    //           },
-    //           volume: 50
-    //         }));
-
-    //     world.audio.push(soundManager.createSound({
-    //           id: 'sound_time',
-    //           url: ['./audio/dp_frogger_time.mp3', './audio/dp_frogger_time.ogg'],
-    //           autoLoad: true,
-    //           autoPlay: false,
-    //           onload: function() {
-    //             console.log('The sound '+this.id+' loaded!');
-    //           },
-    //           volume: 50
-    //         }));
-
-    //   }
-    // });
-
-
-
-
-
-
-
-
-
-
-
 
 //  Defines the play grid.
 World.prototype.grid = {
@@ -191,19 +48,19 @@ World.prototype.grid = {
     }
 };
 
-World.prototype.checkSounds = function() {
-    for (x = 0; x < this.audio.length; x++) {
-        var item = this.audio[x];
-        console.log('this.audio[' + x + '] state = ' + item.playState);
-        console.log(this.audio[x]);
-        if (item.playState === 1) {
-            console.log('sound playing. forcing it to stop.')
+// World.prototype.checkSounds = function() {
+//     for (x = 0; x < this.audio.length; x++) {
+//         var item = this.audio[x];
+//         console.log('this.audio[' + x + '] state = ' + item.playState);
+//         console.log(this.audio[x]);
+//         if (item.playState === 1) {
+//             console.log('sound playing. forcing it to stop.')
 
-        }
+//         }
 
-    }
+//     }
 
-}
+// }
 
 World.prototype.createListeners = function(mobile, multiplier) {
     console.log(multiplier);
@@ -401,18 +258,33 @@ World.prototype.alignGameOver = function(multiplier) {
     this.multiplier = multiplier;
     console.log(world.multiplier);
     var x = ctx.canvas.getBoundingClientRect().left;
+    var sb = document.getElementById('score-board');
+    var go = document.getElementById('game-over');
+    var tt = document.getElementById('toptotal');
+    var st = document.getElementById('scoretotal');
+    var lt = document.getElementById('livestotal');
+
     var width = ctx.canvas.getBoundingClientRect().width;
+    var height = ctx.canvas.getBoundingClientRect().height;
     // var width = engine.actualCanvasWidth;
     console.log(width);
     console.log(x);
     console.log(ctx.canvas.width);
 
     // Centers the game-over message
-    document.getElementById('game-over').style.left = x + width / 4 + 'px';
-    document.getElementById('toptotal').style.left = x + width / 2.8 + 'px';
-    document.getElementById('scoretotal').style.left = x + width / 1.4 + 'px';
-    document.getElementById('livestotal').style.left = x + width / 15 + 'px';
-    document.getElementById('game-over').style.display = "block";
+    // document.getElementById('game-over').style.left = x + width / 4 + 'px';
+    sb.style.width = width + 'px';
+    sb.style.marginleft = width / 10 + 'px';
+
+
+
+    console.log(go.style.width = width + 'px');
+   // document.getElementById('game-over').style.left = x + width / 4 + 'px';
+    tt.style.left = x + width / 2.8 + 'px';
+    st.style.left = x + width / 1.4 + 'px';
+    lt.style.left = x + width / 15 + 'px';
+    go.style.top = x + height / 2 + 'px';
+    go.style.display = "block";
 };
 
 // This function adds the loot to the allLoot array.  It also verifies that no loot will exist

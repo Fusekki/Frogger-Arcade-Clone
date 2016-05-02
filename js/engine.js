@@ -31,7 +31,6 @@ var GameEngine = function(global) {
         this.actualCanvasHeight = null;
 
 
-
     // if (window.matchMedia("(max-width: 320px)").matches) {
     //   // 320 x 568
     //   console.log('iphone 5P detected');
@@ -172,7 +171,6 @@ var GameEngine = function(global) {
         console.log(engine.multiplier);
         window.addEventListener("resize", engine.resizeGame, false);
         engine.resizeGame();
-        world.alignGameOver(engine.multiplier);
         // Calls the gamecontroller
         console.log('Starting controller: ' + engine.mobile);
         if (engine.mobile) {
@@ -186,6 +184,16 @@ var GameEngine = function(global) {
     };
 
     this.resizeGame = function(e) {
+
+        if (window.matchMedia("(min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)").matches) {
+            // 758 x 1024
+            console.log('iPad Portrait');
+            canvas.style.top = "-40px";
+        } else if (window.matchMedia("(min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)").matches) {
+            console.log('iPad Landscape');
+            canvas.style.top = "0";
+        }
+
         viewport = {
             width: window.innerWidth,
             height: window.innerHeight
@@ -208,6 +216,8 @@ var GameEngine = function(global) {
         // Resize game
         canvas.style.width = this.actualCanvasWidth + "px";
         canvas.style.height = this.actualCanvasHeight + "px";
+        // Call to align all the divs on the overlay
+        world.alignGameOver(engine.multiplier);
     }
 
     // Game over
